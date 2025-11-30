@@ -2,18 +2,18 @@ plugins {
     id 'java-library'
     id 'application'
     id 'maven-publish'
-    id "io.freefair.aspectj" version '6.6.3'
-    id 'org.jreleaser' version '1.16.0'
+    id "io.freefair.aspectj" version '8.6'
+    id 'org.jreleaser' version '1.21.0'
 }
 
 group 'io.github.thanglequoc'
-version '1.0.3'
+version '1.1.0'
 
 java {
     withJavadocJar()
     withSourcesJar()
-    sourceCompatibility = "11"
-    targetCompatibility = "11"
+    sourceCompatibility = "17"
+    targetCompatibility = "17"
 }
 
 repositories {
@@ -22,16 +22,16 @@ repositories {
 
 dependencies {
 
-    implementation group: 'org.aspectj', name: 'aspectjrt', version: '[1.9.19,)'
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '[2.0.7,)'
+    implementation group: 'org.aspectj', name: 'aspectjrt', version: '1.9.25'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '[2.0.17,)'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.1'
 
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.15.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.20.0'
 
-    testImplementation group: 'ch.qos.logback', name: 'logback-core', version: '1.4.6'
-    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.6'
+    testImplementation group: 'ch.qos.logback', name: 'logback-core', version: '1.5.21'
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.21'
 }
 
 test {

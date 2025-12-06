@@ -1,8 +1,10 @@
-![TimerNinjaBanner](https://i.imgur.com/dOdfZmV.png)
+<p align="center"><img alt="timer-ninja-mascot" src="https://i.postimg.cc/02xG4vmH/timer-ninja-mascot.png" width="120" /></p>
+<p style="font-size: 25px" align="center"><b>Your Ninja for Java Method Timing</b></p>
+<p style="font-size: 25px" align="center"><b>Your Ninja for Java Method Timing</b></p>
+
 # Timer Ninja
 
-Timer Ninja is a lightweight Java library for measuring method execution time with ease. It provides annotation-based tracking to measure execution time, supports different time units, and visualizes the tracking context in stacktrace tree format.  
-Built on Aspect-Oriented Programming (AOP) with AspectJ, this library seamlessly integrates into your application for precise performance troubleshooting.
+Timer Ninja is a lightweight Java library that makes measuring method execution time effortless. Simply annotate your methods, and it automatically tracks execution duration, preserves the full call hierarchy, and displays it in a clear, visual call tree. With support for multiple time units and optional argument logging, Timer Ninja provides instant insights into your code’s performance. Built on Aspect-Oriented Programming (AOP) with AspectJ, it integrates seamlessly into your application with minimal setup.
 
 ## Problem Space
 Measuring code execution time is a fundamental practice in software development. Whether optimizing performance, debugging slow processes, or ensuring system efficiency, developers frequently need insights into how long the methods take to execute.
@@ -18,19 +20,17 @@ long afterExecution = System.currentTimeMillis();
 System.out.println("Execution time (ms): " + (afterExecution - beforeExecution));
 ```
 
-### Timer Ninja approach
-Timer Ninja library take the AOP approach with AspectJ under the hood. All you need to do, is to simply
-annotate the method you would want to measure the execution time with `@TimerNinjaTracker` annotation.
+### Timer Ninja to the rescue
+[![Gemini-Generated-Image-1g42wl1g42wl1g42.png](https://i.postimg.cc/LX8KDwD1/Gemini-Generated-Image-1g42wl1g42wl1g42.png)](https://postimg.cc/4KqSN8rf)
+Timer Ninja simplifies measuring method execution time by leveraging Aspect-Oriented Programming (AOP) with AspectJ under the hood. Instead of manually capturing timestamps, you simply annotate any method you want to track with the `@TimerNinjaTracker` annotation
 
 ```java
 @TimerNinjaTracker
 public String doSomethingInteresting() {
-     
 }
 ```
 
-Timer Ninja also keeps track of method execution context. If your annotated method is called from the parent method, which also has the 
-`@TimerNinjaTracker` declared, then the execution order and relationship of the methods will be preserved in a tracking output.
+Timer Ninja automatically keeps track of the method execution context. If a tracked method calls another tracked method, Timer Ninja preserves the execution hierarchy, making it easy to see the call relationships and timing details in a single trace output.
 
 **Example Timer Ninja trace output**  
 ```shell
@@ -48,13 +48,12 @@ public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount)
 ```
 
 ## Installation
-For this to work, you will need to do two thing: declare a dependency of `timer-ninja`, and a plugin to compile
-the aspect defined in `timer-ninja` dependency
+To user Timer Ninja, you need to do two things: add the `timer-ninja` dependency and apply an AspectJ plugin so the library’s aspects can be compiled.
 
-### Declare dependency on timer-ninja
+### Add the Timer Ninja dependency
 **Gradle**  
 ```groovy
-implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.0.3'
+implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.2.0'
 ```
 
 **Maven**  
@@ -62,8 +61,10 @@ implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.
 <dependency>
     <groupId>io.github.thanglequoc</groupId>
     <artifactId>timer-ninja</artifactId>
-    <version>1.0.3</version>
+    <version>1.2.0</version>
     <scope>compile</scope>
+    <!-- Optional: if you want to use Timer Ninja in your test code -->
+    <goal>test-compile</goal>
 </dependency>
 ```
 
@@ -82,58 +83,70 @@ plugins {
 dependencies {
     // ...
     // Timer ninja dependency
-    implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.0.3'
-    aspect 'io.github.thanglequoc:timer-ninja:1.0.3'
+    implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.2.0'
+    aspect 'io.github.thanglequoc:timer-ninja:1.2.0'
 }
 ```
 
 ### Maven project
-You can use the [Mojo's AspectJ Plugin](https://www.mojohaus.org/aspectj-maven-plugin/index.html)  
+You can use the [Forked Mojo's AspectJ Plugin](https://www.mojohaus.org/aspectj-maven-plugin/index.html)  
 Example project's `pom.xml`
 
 ```xml
+<properties>
+    <java.version>17</java.version>
+    <aspectj.version>1.9.25</aspectj.version>
+</properties>
 <dependencies>
     <dependency>
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjrt</artifactId>
-        <version>1.9.7</version>
+        <version>${aspectj.version}</version>
     </dependency>
     <dependency>
         <groupId>io.github.thanglequoc</groupId>
         <artifactId>timer-ninja</artifactId>
-        <version>1.0.3</version>
+        <version>1.2.0</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
 
 <build>
-    <plugins>
-        <!-- Codehaus Maven plugin -->
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>aspectj-maven-plugin</artifactId>
-            <version>1.14.0</version>
-            <configuration>
-                <complianceLevel>11</complianceLevel>
-                <source>11</source>
-                <target>11</target>
-                <!-- Specify timer-ninja as the aspect library -->
-                <aspectLibraries>
-                    <aspectLibrary>
-                        <groupId>io.github.thanglequoc</groupId>
-                        <artifactId>timer-ninja</artifactId>
-                    </aspectLibrary>
-                </aspectLibraries>
-            </configuration>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>compile</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
+<plugins>
+    <!-- Forked Codehaus Maven plugin (forked and up-to-date)
+      https://github.com/dev-aspectj/aspectj-maven-plugin
+     -->
+    <plugin>
+        <groupId>dev.aspectj</groupId>
+        <artifactId>aspectj-maven-plugin</artifactId>
+        <version>1.14.1</version>
+        <dependencies>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjtools</artifactId>
+                <!-- AspectJ compiler version, in sync with runtime -->
+                <version>${aspectj.version}</version>
+            </dependency>
+        </dependencies>
+        <configuration>
+            <complianceLevel>${java.version}</complianceLevel>
+            <aspectLibraries>
+                <aspectLibrary>
+                    <groupId>io.github.thanglequoc</groupId>
+                    <artifactId>timer-ninja</artifactId>
+                </aspectLibrary>
+            </aspectLibraries>
+        </configuration>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>compile</goal>
+                    <goal>test-compile</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+</plugins>
 </build>
 ```
 
@@ -157,7 +170,7 @@ Timer Ninja to also print the time trace output to `System.out`
 TimerNinjaConfiguration.getInstance().toggleSystemOutLog(true);
 ```
 
-## Usage
+## `@TimerNinjaTracker` usage
 Now that you're all set and ready to go. Just simply place the tracker by annotating `@TimerNinjaTracker` on any method/constructor
 that you want to measure
 
@@ -173,9 +186,9 @@ public void processPayment(User user, int amount) {
 The following options is available on the `@TimerNinjaTracker` annotation
 
 ```java
-@TimerNinjaTracker(enabled = true, timeUnit = ChronoUnit.MILLIS, includeArgs = true)
+@TimerNinjaTracker(enabled = true, timeUnit = ChronoUnit.MILLIS, includeArgs = true, threshold = 2000)
 public void processPayment(User user, int amount) {
-    (...)
+    // The method implementation
 }
 ```
 #### Toggle tracking
@@ -212,7 +225,24 @@ public void processPayment(User user, int amount) {
 **Sample output:**
 > public void processPayment(User user, int amount) - Args: [user={name='John Doe', email=johndoe@gmail.com}, amount={500}] - 770 ms
 
-### Reading the time trace output
+#### Threshold setting
+Timer Ninja allows you to suppress “acceptable speed” methods by defining a time threshold.
+If the method’s execution time is below the threshold, it will be skipped in the final trace.  
+The threshold value uses the same timeUnit defined on the tracker (default is **millisecond (ms)**)  
+
+When combined with `includeArgs` opt, threshold filtering becomes even more powerful:
+you see only the slow methods along with the exact arguments that caused the delay—ideal for debugging performance issues tied to specific inputs.
+```java
+@TimerNinjaTracker(includeArgs = true, threshold = 200)
+public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount) {
+    // Method logic
+}
+```
+
+**Sample output:**
+> public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount) - Args: [sourceUserId={1}, targetUserId={2}, amount={3000}] - 1037 ms ¤ [Threshold Exceed !!: 200 ms]
+
+## Reading the time trace output
 Once the method is executed, you should be able to find the result similar to this one in the output/log
 
 ```log
@@ -244,4 +274,4 @@ Below are some example projects which has Timer Ninja integrated for your setup 
 
 
 ----
-###### 🦥 Project logo is randomly (and nicely) generated by [Dall-E](https://openai.com/product/dall-e-2)
+###### 🦥 Project logo generated by [Google Gemini](https://gemini.google.com)

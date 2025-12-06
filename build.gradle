@@ -2,12 +2,12 @@ plugins {
     id 'java-library'
     id 'application'
     id 'maven-publish'
-    id "io.freefair.aspectj" version '8.6'
+    id 'io.freefair.aspectj' version '9.1.0'
     id 'org.jreleaser' version '1.21.0'
 }
 
 group 'io.github.thanglequoc'
-version '1.1.0'
+version '1.2.0-SNAPSHOT'
 
 java {
     withJavadocJar()
@@ -21,15 +21,12 @@ repositories {
 }
 
 dependencies {
-
     implementation group: 'org.aspectj', name: 'aspectjrt', version: '1.9.25'
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '[2.0.17,)'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.1'
-
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.20.0'
-
     testImplementation group: 'ch.qos.logback', name: 'logback-core', version: '1.5.21'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.21'
 }

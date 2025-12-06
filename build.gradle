@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'io.github.thanglequoc'
-version '1.2.1-SNAPSHOT'
+version '1.2.0'
 
 java {
     withJavadocJar()
@@ -86,7 +86,7 @@ jreleaser {
             homepage = 'https://github.com/ThangLeQuoc/timer-ninja'
         }
         description = 'A handy Java utility to help you measure execution time of Java code'
-        longDescription = 'Timer Ninja is a brainless Java library to evaluate your Java code method execution time. Timer Ninja follows the Aspect Oriented Programming (AOP) concept, backed by AspectJ, to make it super simple to declare tracker on method.'
+        longDescription = 'Timer Ninja is a lightweight Java library for effortlessly measuring method execution time. Just annotate your methods, and it automatically tracks duration, preserves the full call hierarchy, and outputs a clear, visual call tree with detailed timing and argument information.'
     }
 
     deploy {

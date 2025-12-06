@@ -1,10 +1,14 @@
-<p align="center"><img alt="timer-ninja-mascot" src="https://i.postimg.cc/02xG4vmH/timer-ninja-mascot.png" width="120" /></p>
-<p style="font-size: 25px" align="center"><b>Your Ninja for Java Method Timing</b></p>
-<p style="font-size: 25px" align="center"><b>Your Ninja for Java Method Timing</b></p>
-
 # Timer Ninja
 
-Timer Ninja is a lightweight Java library that makes measuring method execution time effortless. Simply annotate your methods, and it automatically tracks execution duration, preserves the full call hierarchy, and displays it in a clear, visual call tree. With support for multiple time units and optional argument logging, Timer Ninja provides instant insights into your code’s performance. Built on Aspect-Oriented Programming (AOP) with AspectJ, it integrates seamlessly into your application with minimal setup.
+<p align="center"><img alt="timer-ninja-mascot" src="https://i.postimg.cc/02xG4vmH/timer-ninja-mascot.png" width="120" /></p>
+<p style="font-size: 25px" align="center"><b>A sneaky library for Java Method Timing</b></p>
+
+[![Sonartype](https://maven-badges.sml.io/sonatype-central/io.github.thanglequoc/timer-ninja/badge.svg)](https://central.sonatype.com/artifact/io.github.thanglequoc/timer-ninja)
+<br/>
+
+
+Timer Ninja is a lightweight Java library that makes measuring method execution time effortless. Simply annotate your methods, and it automatically tracks execution duration, preserves the full call hierarchy, and displays it in a clear, visual call tree. With support for multiple time units and optional argument logging, Timer Ninja provides instant insights into your code’s performance.  
+Built on Aspect-Oriented Programming (AOP) with AspectJ, it integrates seamlessly into your application with minimal setup.
 
 ## Problem Space
 Measuring code execution time is a fundamental practice in software development. Whether optimizing performance, debugging slow processes, or ensuring system efficiency, developers frequently need insights into how long the methods take to execute.

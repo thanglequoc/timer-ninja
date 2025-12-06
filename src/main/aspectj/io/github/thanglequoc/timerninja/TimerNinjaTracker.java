@@ -32,6 +32,8 @@ public @interface TimerNinjaTracker {
     /**
      * Determine if this tracker should also include the argument information passed to the method being tracked
      * Default is false
+     *
+     * @return true if the tracker should include argument information, false otherwise
      * */
     boolean includeArgs() default false;
 
@@ -39,6 +41,8 @@ public @interface TimerNinjaTracker {
      * Set the threshold of the tracker, if the execution time of the method is less than the threshold,
      * the tracker will not be included in the tracking result.
      * Default is -1, which means no threshold is set.
+     *
+     * @return the threshold definition for the current tracker
      * */
     int threshold() default -1;
 }

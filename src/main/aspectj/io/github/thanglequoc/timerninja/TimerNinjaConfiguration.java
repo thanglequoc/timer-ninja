@@ -14,9 +14,10 @@ public class TimerNinjaConfiguration {
     }
 
     /**
-     * Get the singleton configuration instance of Timer Ninja
-     * @return The singleton instance
-     * */
+     * Returns the singleton instance of {@link TimerNinjaConfiguration}.
+     *
+     * @return the singleton configuration instance
+     */
     public static TimerNinjaConfiguration getInstance() {
         if (instance == null) {
             instance = new TimerNinjaConfiguration();

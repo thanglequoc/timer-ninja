@@ -116,16 +116,17 @@ public class TimerNinjaIntegrationTest {
         List<String> formattedMessages = logCaptureExtension.getFormattedMessages();
         assertFalse(formattedMessages.isEmpty());
 
-        // @thangle: The output format for trace context that has all method meet the threshold does not look very good and still make the output
-        // look redundant and feel like something is wrong that it's not printing out. We will come back and improve the trace output
-        // for this case later.
+        // When all tracked items are within threshold, a summary is shown instead of empty trace
         assertTrue(formattedMessages.get(0).startsWith("Timer Ninja trace context id:"));
         assertTrue(formattedMessages.get(0).contains("Trace timestamp:"));
-        assertTrue(formattedMessages.get(1).startsWith("{===== Start of trace context id:"));
-        assertTrue(formattedMessages.get(2).startsWith("{====== End of trace context id:"));
+        assertTrue(formattedMessages.get(1).startsWith("All "));
+        assertTrue(formattedMessages.get(1).contains("tracked items within threshold"));
+        assertTrue(formattedMessages.get(1).contains("min:"));
+        assertTrue(formattedMessages.get(1).contains("max:"));
+        assertTrue(formattedMessages.get(1).contains("total:"));
 
-        // The notification service is called but there is no trace output printing out, this is the expected behavior
-        // because its parent method met the threshold setting
+        // The notification service is called but there is no detailed trace output printing out, 
+        // this is the expected behavior because all methods met the threshold setting
         verify(notificationService, times(1)).notify(user);
     }
 

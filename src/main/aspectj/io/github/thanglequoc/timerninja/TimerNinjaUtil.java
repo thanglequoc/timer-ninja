@@ -18,23 +18,26 @@ import java.util.List;
 
 /**
  * General utility class of TimerNinja library
- * */
+ */
 public class TimerNinjaUtil {
 
     private static Logger LOGGER = LoggerFactory.getLogger(TimerNinjaUtil.class);
 
     /**
-     * The timer ninja util is a util class with static method, so instance creation is not allowed on this util class
-     * */
+     * The timer ninja util is a util class with static method, so instance creation
+     * is not allowed on this util class
+     */
     private TimerNinjaUtil() {
     }
 
     /**
-     * Determines whether the {@link TimerNinjaTracker} annotation is enabled on the given method.
+     * Determines whether the {@link TimerNinjaTracker} annotation is enabled on the
+     * given method.
      *
      * @param methodSignature the AspectJ {@code MethodSignature} representing
      *                        the annotated method; must not be {@code null}
-     * @return {@code true} if the {@link TimerNinjaTracker#enabled()} flag is set to {@code true}
+     * @return {@code true} if the {@link TimerNinjaTracker#enabled()} flag is set
+     *         to {@code true}
      *         on the method, {@code false} otherwise
      * @throws IllegalArgumentException if {@code methodSignature} is {@code null}
      */
@@ -48,28 +51,35 @@ public class TimerNinjaUtil {
     }
 
     /**
-     * Determines whether the {@link TimerNinjaTracker} annotation is enabled on the given constructor.
+     * Determines whether the {@link TimerNinjaTracker} annotation is enabled on the
+     * given constructor.
      *
      * @param constructorSignature the AspectJ {@code ConstructorSignature}
-     *                             representing the annotated constructor; must not be {@code null}
-     * @return {@code true} if the {@link TimerNinjaTracker#enabled()} flag is set to {@code true}
+     *                             representing the annotated constructor; must not
+     *                             be {@code null}
+     * @return {@code true} if the {@link TimerNinjaTracker#enabled()} flag is set
+     *         to {@code true}
      *         on the constructor, {@code false} otherwise
-     * @throws IllegalArgumentException if {@code constructorSignature} is {@code null}
+     * @throws IllegalArgumentException if {@code constructorSignature} is
+     *                                  {@code null}
      */
     public static boolean isTimerNinjaTrackerEnabled(ConstructorSignature constructorSignature) {
         if (constructorSignature == null) {
             throw new IllegalArgumentException("ConstructorSignature must be present");
         }
-        TimerNinjaTracker annotation = (TimerNinjaTracker) constructorSignature.getConstructor().getAnnotation(TimerNinjaTracker.class);
+        TimerNinjaTracker annotation = (TimerNinjaTracker) constructorSignature.getConstructor()
+                .getAnnotation(TimerNinjaTracker.class);
         return annotation.enabled();
     }
 
     /**
-     * Retrieves the threshold value defined in the {@link TimerNinjaTracker} annotation on the given method.
+     * Retrieves the threshold value defined in the {@link TimerNinjaTracker}
+     * annotation on the given method.
      *
      * @param methodSignature the AspectJ {@code MethodSignature} representing
      *                        the annotated method; must not be {@code null}
-     * @return the threshold value configured via {@link TimerNinjaTracker#threshold()}
+     * @return the threshold value configured via
+     *         {@link TimerNinjaTracker#threshold()}
      * @throws IllegalArgumentException if {@code methodSignature} is {@code null}
      */
     public static int getThreshold(MethodSignature methodSignature) {
@@ -81,19 +91,23 @@ public class TimerNinjaUtil {
     }
 
     /**
-     * Retrieves the threshold value defined in the {@link TimerNinjaTracker} annotation on the given constructor.
+     * Retrieves the threshold value defined in the {@link TimerNinjaTracker}
+     * annotation on the given constructor.
      *
      * @param constructorSignature the AspectJ {@code ConstructorSignature}
      *                             representing the annotated constructor;
      *                             must not be {@code null}
-     * @return the threshold value configured via {@link TimerNinjaTracker#threshold()}
-     * @throws IllegalArgumentException if {@code constructorSignature} is {@code null}
+     * @return the threshold value configured via
+     *         {@link TimerNinjaTracker#threshold()}
+     * @throws IllegalArgumentException if {@code constructorSignature} is
+     *                                  {@code null}
      */
     public static int getThreshold(ConstructorSignature constructorSignature) {
         if (constructorSignature == null) {
             throw new IllegalArgumentException("ConstructorSignature must be present");
         }
-        TimerNinjaTracker annotation = (TimerNinjaTracker) constructorSignature.getConstructor().getAnnotation(TimerNinjaTracker.class);
+        TimerNinjaTracker annotation = (TimerNinjaTracker) constructorSignature.getConstructor()
+                .getAnnotation(TimerNinjaTracker.class);
         return annotation.threshold();
     }
 
@@ -101,17 +115,22 @@ public class TimerNinjaUtil {
      * Determines whether argument logging is enabled for the given constructor
      * annotated with {@link TimerNinjaTracker}.
      *
-     * @param constructorSignature the AspectJ {@code ConstructorSignature} representing
-     *                             the annotated constructor; must not be {@code null}
-     * @return {@code true} if the {@link TimerNinjaTracker#includeArgs()} flag is enabled
+     * @param constructorSignature the AspectJ {@code ConstructorSignature}
+     *                             representing
+     *                             the annotated constructor; must not be
+     *                             {@code null}
+     * @return {@code true} if the {@link TimerNinjaTracker#includeArgs()} flag is
+     *         enabled
      *         on the constructor, {@code false} otherwise
-     * @throws IllegalArgumentException if {@code constructorSignature} is {@code null}
+     * @throws IllegalArgumentException if {@code constructorSignature} is
+     *                                  {@code null}
      */
     public static boolean isArgsIncluded(ConstructorSignature constructorSignature) {
         if (constructorSignature == null) {
             throw new IllegalArgumentException("ConstructorSignature must be present");
         }
-        TimerNinjaTracker annotation = (TimerNinjaTracker) constructorSignature.getConstructor().getAnnotation(TimerNinjaTracker.class);
+        TimerNinjaTracker annotation = (TimerNinjaTracker) constructorSignature.getConstructor()
+                .getAnnotation(TimerNinjaTracker.class);
         return annotation.includeArgs();
     }
 
@@ -121,7 +140,8 @@ public class TimerNinjaUtil {
      *
      * @param methodSignature the AspectJ {@code MethodSignature} representing
      *                        the annotated method; must not be {@code null}
-     * @return {@code true} if the {@link TimerNinjaTracker#includeArgs()} flag is enabled
+     * @return {@code true} if the {@link TimerNinjaTracker#includeArgs()} flag is
+     *         enabled
      *         on the method, {@code false} otherwise
      * @throws IllegalArgumentException if {@code methodSignature} is {@code null}
      */
@@ -134,7 +154,8 @@ public class TimerNinjaUtil {
     }
 
     /**
-     * Retrieves the {@link ChronoUnit} time unit defined in the {@link TimerNinjaTracker} annotation on the given method.
+     * Retrieves the {@link ChronoUnit} time unit defined in the
+     * {@link TimerNinjaTracker} annotation on the given method.
      *
      * @param methodSignature the AspectJ {@code MethodSignature} representing
      *                        the annotated method; must not be {@code null}
@@ -151,21 +172,130 @@ public class TimerNinjaUtil {
     }
 
     /**
-     * Retrieves the {@link ChronoUnit} time unit defined in the {@link TimerNinjaTracker} annotation on the given constructor.
+     * Retrieves the {@link ChronoUnit} time unit defined in the
+     * {@link TimerNinjaTracker} annotation on the given constructor.
      *
      * @param constructorSignature the AspectJ {@code ConstructorSignature}
      *                             representing the annotated constructor;
      *                             must not be {@code null}
      * @return the time unit configured via {@link TimerNinjaTracker#timeUnit()}
-     * @throws IllegalArgumentException if {@code constructorSignature} is {@code null}
+     * @throws IllegalArgumentException if {@code constructorSignature} is
+     *                                  {@code null}
      */
     public static ChronoUnit getTrackingTimeUnit(ConstructorSignature constructorSignature) {
         if (constructorSignature == null) {
             throw new IllegalArgumentException("ConstructorSignature must be present");
         }
 
-        TimerNinjaTracker annotation = (TimerNinjaTracker) constructorSignature.getConstructor().getAnnotation(TimerNinjaTracker.class);
+        TimerNinjaTracker annotation = (TimerNinjaTracker) constructorSignature.getConstructor()
+                .getAnnotation(TimerNinjaTracker.class);
         return annotation.timeUnit();
+    }
+
+    /**
+     * Retrieves the tracker ID for a method. If no custom trackerId is specified
+     * in the annotation, generates a default ID in the format
+     * "ClassName.methodName".
+     *
+     * @param methodSignature the AspectJ {@code MethodSignature}
+     * @return the tracker ID for statistics
+     */
+    public static String getTrackerId(MethodSignature methodSignature) {
+        if (methodSignature == null) {
+            throw new IllegalArgumentException("MethodSignature must be present");
+        }
+
+        TimerNinjaTracker annotation = methodSignature.getMethod().getAnnotation(TimerNinjaTracker.class);
+        String customId = annotation.trackerId();
+
+        if (customId != null && !customId.isEmpty()) {
+            return customId;
+        }
+
+        // Generate default: ClassName.methodName
+        String className = methodSignature.getDeclaringType().getSimpleName();
+        String methodName = methodSignature.getName();
+        return className + "." + methodName;
+    }
+
+    /**
+     * Retrieves the tracker ID for a constructor. If no custom trackerId is
+     * specified
+     * in the annotation, generates a default ID in the format "ClassName.ClassName"
+     * (constructor).
+     *
+     * @param constructorSignature the AspectJ {@code ConstructorSignature}
+     * @return the tracker ID for statistics
+     */
+    public static String getTrackerId(ConstructorSignature constructorSignature) {
+        if (constructorSignature == null) {
+            throw new IllegalArgumentException("ConstructorSignature must be present");
+        }
+
+        TimerNinjaTracker annotation = (TimerNinjaTracker) constructorSignature.getConstructor()
+                .getAnnotation(TimerNinjaTracker.class);
+        String customId = annotation.trackerId();
+
+        if (customId != null && !customId.isEmpty()) {
+            return customId;
+        }
+
+        // Generate default: ClassName.<init>
+        String className = constructorSignature.getDeclaringType().getSimpleName();
+        return className + ".<init>";
+    }
+
+    /**
+     * Returns a shortened method signature without modifiers and parameter names.
+     * Example: "processPayment(User, int)"
+     *
+     * @param methodSignature the method signature
+     * @return shortened signature string
+     */
+    public static String getShortenedMethodSignature(MethodSignature methodSignature) {
+        if (methodSignature == null) {
+            throw new IllegalArgumentException("MethodSignature must be present");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(methodSignature.getName()).append("(");
+
+        Class<?>[] parameterClasses = methodSignature.getParameterTypes();
+        for (int i = 0; i < parameterClasses.length; i++) {
+            sb.append(parameterClasses[i].getSimpleName());
+            if (i != parameterClasses.length - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append(")");
+        return sb.toString();
+    }
+
+    /**
+     * Returns a shortened constructor signature without modifiers and parameter
+     * names.
+     * Example: "MyClass(String, int)"
+     *
+     * @param constructorSignature the constructor signature
+     * @return shortened signature string
+     */
+    public static String getShortenedConstructorSignature(ConstructorSignature constructorSignature) {
+        if (constructorSignature == null) {
+            throw new IllegalArgumentException("ConstructorSignature must be present");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(constructorSignature.getDeclaringType().getSimpleName()).append("(");
+
+        Class<?>[] parameterClasses = constructorSignature.getParameterTypes();
+        for (int i = 0; i < parameterClasses.length; i++) {
+            sb.append(parameterClasses[i].getSimpleName());
+            if (i != parameterClasses.length - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append(")");
+        return sb.toString();
     }
 
     /**
@@ -174,12 +304,15 @@ public class TimerNinjaUtil {
      * <p>
      * The output format resembles a simplified Java method declaration.
      * Example:
+     * 
      * <pre>
      * public static String prettyGetMethodSignature(MethodSignature methodSignature)
      * </pre>
      *
-     * @param methodSignature the AspectJ {@code MethodSignature} to render; must not be {@code null}
-     * @return a formatted string containing the method modifiers, return type, name,
+     * @param methodSignature the AspectJ {@code MethodSignature} to render; must
+     *                        not be {@code null}
+     * @return a formatted string containing the method modifiers, return type,
+     *         name,
      *         and parameters
      * @throws IllegalArgumentException if {@code methodSignature} is {@code null}
      */
@@ -217,20 +350,24 @@ public class TimerNinjaUtil {
     }
 
     /**
-     * Builds a human-readable representation of a constructor signature, including its
+     * Builds a human-readable representation of a constructor signature, including
+     * its
      * modifiers, class name, and parameter list.
      * <p>
      * The output format resembles a simplified Java constructor declaration.
      * Example:
+     * 
      * <pre>
      * public TrackerItemContext(String abc)
      * </pre>
      *
-     * @param constructorSignature the AspectJ {@code ConstructorSignature} to render;
+     * @param constructorSignature the AspectJ {@code ConstructorSignature} to
+     *                             render;
      *                             must not be {@code null}
      * @return a formatted string containing the constructor modifiers, class name,
      *         and parameters
-     * @throws IllegalArgumentException if {@code constructorSignature} is {@code null}
+     * @throws IllegalArgumentException if {@code constructorSignature} is
+     *                                  {@code null}
      */
     public static String prettyGetConstructorSignature(ConstructorSignature constructorSignature) {
         if (constructorSignature == null) {
@@ -269,13 +406,16 @@ public class TimerNinjaUtil {
      * <code>name={value}</code>.
      * <p>
      * Example output:
+     * 
      * <pre>
      * user={name='John Doe', age=30}, amount={500}
      * </pre>
      *
-     * @param joinPoint the AspectJ {@code JoinPoint} containing argument and parameter
+     * @param joinPoint the AspectJ {@code JoinPoint} containing argument and
+     *                  parameter
      *                  name information; must not be {@code null}
-     * @return a formatted string listing parameter names and their corresponding values
+     * @return a formatted string listing parameter names and their corresponding
+     *         values
      * @throws IllegalArgumentException if {@code joinPoint} is {@code null}
      */
     public static String prettyGetArguments(JoinPoint joinPoint) {
@@ -285,7 +425,7 @@ public class TimerNinjaUtil {
 
         StringBuilder sb = new StringBuilder();
         Object[] args = joinPoint.getArgs();
-        String[] names = ((CodeSignature)joinPoint.getSignature()).getParameterNames();
+        String[] names = ((CodeSignature) joinPoint.getSignature()).getParameterNames();
         for (int i = 0; i < args.length; i++) {
             sb.append(names[i]);
             sb.append("={");
@@ -299,15 +439,16 @@ public class TimerNinjaUtil {
     }
 
     /**
-     * Logs a detailed execution trace for the provided {@link TimerNinjaThreadContext}.
+     * Logs a detailed execution trace for the provided
+     * {@link TimerNinjaThreadContext}.
      * <p>
      * The output includes:
      * <ul>
-     *     <li>the timer-ninja trace context ID</li>
-     *     <li>the UTC creation timestamp of the tracking context</li>
-     *     <li>a formatted breakdown of each tracked method or constructor,
-     *         including indentation, arguments (if enabled), execution times,
-     *         and threshold exceed indicators</li>
+     * <li>the timer-ninja trace context ID</li>
+     * <li>the UTC creation timestamp of the tracking context</li>
+     * <li>a formatted breakdown of each tracked method or constructor,
+     * including indentation, arguments (if enabled), execution times,
+     * and threshold exceed indicators</li>
      * </ul>
      *
      * <p>
@@ -316,9 +457,11 @@ public class TimerNinjaUtil {
      * configuration defined in {@link TimerNinjaConfiguration}.
      *
      * @param timerNinjaThreadContext the thread-local tracking context containing
-     *                                all recorded {@link TrackerItemContext} entries;
+     *                                all recorded {@link TrackerItemContext}
+     *                                entries;
      *                                must not be {@code null}
-     * @throws IllegalArgumentException if {@code timerNinjaThreadContext} is {@code null}
+     * @throws IllegalArgumentException if {@code timerNinjaThreadContext} is
+     *                                  {@code null}
      */
     public static void logTimerContextTrace(TimerNinjaThreadContext timerNinjaThreadContext) {
         if (timerNinjaThreadContext == null) {
@@ -334,27 +477,29 @@ public class TimerNinjaUtil {
             return;
         }
 
-        // First, filter out items that are within threshold and check if any items should be logged
+        // First, filter out items that are within threshold and check if any items
+        // should be logged
         List<TrackerItemContext> itemsToLog = new ArrayList<>();
         for (TrackerItemContext item : timerNinjaThreadContext.getItemContextMap().values()) {
             boolean shouldLogItem = true;
-            
+
             // Item has threshold enabled and is within limit - don't log it
             if (item.isEnableThreshold() && item.getExecutionTime() < item.getThreshold()) {
                 shouldLogItem = false;
             }
-            
+
             if (shouldLogItem) {
                 itemsToLog.add(item);
             }
         }
 
-        // If all items are filtered out by threshold, provide a summary instead of empty trace
+        // If all items are filtered out by threshold, provide a summary instead of
+        // empty trace
         if (itemsToLog.isEmpty()) {
             long totalExecutionTime = 0;
             long minTime = Long.MAX_VALUE;
             long maxTime = 0;
-            
+
             for (TrackerItemContext item : timerNinjaThreadContext.getItemContextMap().values()) {
                 totalExecutionTime += item.getExecutionTime();
                 if (item.getExecutionTime() < minTime) {
@@ -364,9 +509,9 @@ public class TimerNinjaUtil {
                     maxTime = item.getExecutionTime();
                 }
             }
-            
-            logMessage("All {} tracked items within threshold (min: {} ms, max: {} ms, total: {} ms)", 
-                timerNinjaThreadContext.getItemContextMap().size(), minTime, maxTime, totalExecutionTime);
+
+            logMessage("All {} tracked items within threshold (min: {} ms, max: {} ms, total: {} ms)",
+                    timerNinjaThreadContext.getItemContextMap().size(), minTime, maxTime, totalExecutionTime);
             return;
         }
 
@@ -375,12 +520,12 @@ public class TimerNinjaUtil {
 
         for (TrackerItemContext item : itemsToLog) {
             /*
-            * Breakdown msg format
-                {}{}: Indent + Method name
-                - Args: [{}]: Args information (if included?)
-                - {} {}: Execution time + unit
-                ¤ [Threshold Exceed !!: {} ms]: If threshold exceeded
-            *  */
+             * Breakdown msg format
+             * {}{}: Indent + Method name
+             * - Args: [{}]: Args information (if included?)
+             * - {} {}: Execution time + unit
+             * ¤ [Threshold Exceed !!: {} ms]: If threshold exceeded
+             */
             List<Object> argList = new ArrayList<>();
             StringBuilder msgFormat = new StringBuilder();
 
@@ -422,7 +567,7 @@ public class TimerNinjaUtil {
      *
      * @param format the message format string, supporting '{}' placeholders
      *               for argument substitution
-     * @param args the arguments to be substituted into the format string
+     * @param args   the arguments to be substituted into the format string
      */
     private static void logMessage(String format, Object... args) {
         LOGGER.info(format, args);
@@ -439,7 +584,8 @@ public class TimerNinjaUtil {
      * The prefix consists of spaces proportional to the pointer depth, followed
      * by the "|-- " marker.
      *
-     * @param pointerDepth the depth of the method/constructor in the trace hierarchy;
+     * @param pointerDepth the depth of the method/constructor in the trace
+     *                     hierarchy;
      *                     zero indicates no indentation
      * @return a formatted string containing leading spaces and the "|-- " prefix,
      *         suitable for aligning nested method traces
@@ -450,7 +596,7 @@ public class TimerNinjaUtil {
         }
         int spaceCount = pointerDepth * 2;
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i<= spaceCount; i++) {
+        for (int i = 1; i <= spaceCount; i++) {
             sb.append(" ");
         }
         sb.append("|-- ");
@@ -476,43 +622,45 @@ public class TimerNinjaUtil {
      * <p>
      * Supported conversions:
      * <ul>
-     *     <li>{@link ChronoUnit#MILLIS}: returns the same value</li>
-     *     <li>{@link ChronoUnit#SECONDS}: converts milliseconds to seconds</li>
-     *     <li>{@link ChronoUnit#MICROS}: converts milliseconds to microseconds</li>
+     * <li>{@link ChronoUnit#MILLIS}: returns the same value</li>
+     * <li>{@link ChronoUnit#SECONDS}: converts milliseconds to seconds</li>
+     * <li>{@link ChronoUnit#MICROS}: converts milliseconds to microseconds</li>
      * </ul>
      *
-     * @param timeInMillis the time value in milliseconds
+     * @param timeInMillis  the time value in milliseconds
      * @param unitToConvert the target {@link ChronoUnit} to convert the time into;
      *                      must be one of the supported units
      * @return the converted time in the specified {@code ChronoUnit}
-     * @throws IllegalStateException if {@code unitToConvert} is not supported by this method
+     * @throws IllegalStateException if {@code unitToConvert} is not supported by
+     *                               this method
      */
     public static long convertFromMillis(long timeInMillis, ChronoUnit unitToConvert) {
-       if (ChronoUnit.MILLIS.equals(unitToConvert)) {
-           return timeInMillis;
-       }
-       else if (ChronoUnit.SECONDS.equals(unitToConvert)) {
-           return timeInMillis / 1000;
-       } else if (ChronoUnit.MICROS.equals(unitToConvert)) {
-           return timeInMillis * 1000;
-       }
-       throw new IllegalStateException("Time unit not supported");
+        if (ChronoUnit.MILLIS.equals(unitToConvert)) {
+            return timeInMillis;
+        } else if (ChronoUnit.SECONDS.equals(unitToConvert)) {
+            return timeInMillis / 1000;
+        } else if (ChronoUnit.MICROS.equals(unitToConvert)) {
+            return timeInMillis * 1000;
+        }
+        throw new IllegalStateException("Time unit not supported");
     }
 
     /**
-     * Returns a short, human-readable string representing the given {@link ChronoUnit}.
+     * Returns a short, human-readable string representing the given
+     * {@link ChronoUnit}.
      * <p>
      * Supported units:
      * <ul>
-     *     <li>{@link ChronoUnit#MILLIS}: "ms"</li>
-     *     <li>{@link ChronoUnit#SECONDS}: "s"</li>
-     *     <li>{@link ChronoUnit#MICROS}: "µs"</li>
+     * <li>{@link ChronoUnit#MILLIS}: "ms"</li>
+     * <li>{@link ChronoUnit#SECONDS}: "s"</li>
+     * <li>{@link ChronoUnit#MICROS}: "µs"</li>
      * </ul>
      *
      * @param chronoUnit the {@link ChronoUnit} to get the short display unit for;
      *                   must be one of the supported units
      * @return the short string representation of the time unit
-     * @throws IllegalStateException if {@code chronoUnit} is not supported by this method
+     * @throws IllegalStateException if {@code chronoUnit} is not supported by this
+     *                               method
      */
     private static String getPresentationUnit(ChronoUnit chronoUnit) {
         if (ChronoUnit.MILLIS.equals(chronoUnit)) {
@@ -531,6 +679,7 @@ public class TimerNinjaUtil {
      * <p>
      * The output pattern is {@code yyyy-MM-dd'T'HH:mm:ss.SSS'Z'}.
      * Example output:
+     * 
      * <pre>
      * 2023-03-27T11:24:46.948Z
      * </pre>
@@ -541,7 +690,7 @@ public class TimerNinjaUtil {
      */
     private static String toUTCTimestampString(Instant instant) {
         return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-                                .withZone(ZoneOffset.UTC)
-                                .format(instant);
+                .withZone(ZoneOffset.UTC)
+                .format(instant);
     }
 }

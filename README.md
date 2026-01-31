@@ -67,8 +67,6 @@ implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.
     <artifactId>timer-ninja</artifactId>
     <version>1.2.0</version>
     <scope>compile</scope>
-    <!-- Optional: if you want to use Timer Ninja in your test code -->
-    <goal>test-compile</goal>
 </dependency>
 ```
 
@@ -81,7 +79,7 @@ Example project's `build.gradle`:
 ```groovy
 plugins {
     // ...
-    id "io.freefair.aspectj.post-compile-weaving" version '6.6.3'
+    id "io.freefair.aspectj.post-compile-weaving" version '9.1.0'
 }
 
 dependencies {
@@ -89,16 +87,19 @@ dependencies {
     // Timer ninja dependency
     implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.2.0'
     aspect 'io.github.thanglequoc:timer-ninja:1.2.0'
+
+    // Enable this if you want to track method in Test classes
+	testAspect("io.github.thanglequoc:timer-ninja:1.2.0")
 }
 ```
 
 ### Maven project
-You can use the [Forked Mojo's AspectJ Plugin](https://www.mojohaus.org/aspectj-maven-plugin/index.html)  
+You can use the [Forked Mojo's AspectJ Plugin](https://github.com/dev-aspectj/aspectj-maven-plugin)  
 Example project's `pom.xml`
 
 ```xml
 <properties>
-    <java.version>17</java.version>
+    <java.version>25</java.version>
     <aspectj.version>1.9.25</aspectj.version>
 </properties>
 <dependencies>
@@ -145,6 +146,7 @@ Example project's `pom.xml`
             <execution>
                 <goals>
                     <goal>compile</goal>
+                    <!-- Enable the test-compile goal if you want to use Tracker in the Java Test -->
                     <goal>test-compile</goal>
                 </goals>
             </execution>
@@ -273,8 +275,8 @@ if you have any improvement to this project.
 ## Example projects
 Below are some example projects which has Timer Ninja integrated for your setup reference 
 
-[Spring Boot ToDo List - Gradle build](https://github.com/ThangLeQuoc/timer-ninja-examples/tree/main/timerninja-todolist-gradle)  
-[Spring Boot ToDo List - Maven build](https://github.com/ThangLeQuoc/timer-ninja-examples/tree/main/timerninja-todolist-maven)
+[Spring Boot - Ninja Coffee Shop - Gradle](https://github.com/thanglequoc/timer-ninja-examples/tree/main/ninja-coffee-shop-gradle)  
+[Spring Boot - Ninja Coffee Shop - Maven](https://github.com/thanglequoc/timer-ninja-examples/tree/main/ninja-coffee-shop-maven)
 
 
 ----

@@ -128,10 +128,13 @@ public class TimerNinjaBlockTest {
         assertFalse(formattedMessages.isEmpty());
         
         // The block should be filtered out from the trace because it's below threshold
-        // The trace will show start and end markers but no block content
+        // The trace will now show a summary instead of empty trace
         assertTrue(formattedMessages.get(0).contains("Timer Ninja trace context id:"));
-        assertTrue(formattedMessages.get(1).contains("{===== Start of trace context id:"));
-        assertTrue(formattedMessages.get(2).contains("{====== End of trace context id:"));
+        assertTrue(formattedMessages.get(1).startsWith("All "));
+        assertTrue(formattedMessages.get(1).contains("tracked items within threshold"));
+        assertTrue(formattedMessages.get(1).contains("min:"));
+        assertTrue(formattedMessages.get(1).contains("max:"));
+        assertTrue(formattedMessages.get(1).contains("total:"));
     }
 
     @Test

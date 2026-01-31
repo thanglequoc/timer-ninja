@@ -17,8 +17,6 @@ import static io.github.thanglequoc.timerninja.TimerNinjaThreadContext.LOGGER;
  * */
 public aspect TimeTrackingAspect {
 
-    private static ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = initTrackingContext();
-
     /**
      * Point cut is any method, or constructor annotated with @TimerNinjaTracker
      * */
@@ -33,10 +31,11 @@ public aspect TimeTrackingAspect {
         Signature signature = staticPart.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
 
-        if (isTrackingContextNull()) {
-            localTrackingCtx = initTrackingContext();
+        if (TimerNinjaContextManager.isTrackingContextNull()) {
+            TimerNinjaContextManager.setLocalTrackingCtx(TimerNinjaContextManager.initTrackingContext());
         }
 
+        ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = TimerNinjaContextManager.getLocalTrackingCtx();
         TimerNinjaThreadContext trackingCtx = localTrackingCtx.get();
         String traceContextId = trackingCtx.getTraceContextId();
         boolean isTrackerEnabled = TimerNinjaUtil.isTimerNinjaTrackerEnabled(methodSignature);
@@ -95,9 +94,10 @@ public aspect TimeTrackingAspect {
         Signature signature = staticPart.getSignature();
         ConstructorSignature constructorSignature = (ConstructorSignature) signature;
 
-        if (isTrackingContextNull()) {
-            localTrackingCtx = initTrackingContext();
+        if (TimerNinjaContextManager.isTrackingContextNull()) {
+            TimerNinjaContextManager.setLocalTrackingCtx(TimerNinjaContextManager.initTrackingContext());
         }
+        ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = TimerNinjaContextManager.getLocalTrackingCtx();
         TimerNinjaThreadContext trackingCtx = localTrackingCtx.get();
         String traceContextId = trackingCtx.getTraceContextId();
         boolean isTrackerEnabled = TimerNinjaUtil.isTimerNinjaTrackerEnabled(constructorSignature);
@@ -147,23 +147,4 @@ public aspect TimeTrackingAspect {
         return object;
     }
 
-    /**
-     * Static method to initiate a new Timer Ninja tracking context associated with the current execution thread
-     * */
-    private static ThreadLocal<TimerNinjaThreadContext> initTrackingContext() {
-        Thread currentThread = Thread.currentThread();
-        ThreadLocal<TimerNinjaThreadContext> timerNinjaLocalThreadContext = new ThreadLocal<>();
-        TimerNinjaThreadContext timerNinjaThreadContext = new TimerNinjaThreadContext();
-        timerNinjaLocalThreadContext.set(timerNinjaThreadContext);
-        LOGGER.debug("{} ({})| TimerNinjaTracking context {} initiated",
-            currentThread.getName(),
-            currentThread.getId(),
-            timerNinjaThreadContext.getTraceContextId()
-        );
-        return timerNinjaLocalThreadContext;
-    }
-
-    private static boolean isTrackingContextNull() {
-        return localTrackingCtx.get() == null;
-    }
 }

@@ -62,41 +62,45 @@ public aspect TimeTrackingAspect {
 
         // Method invocation
         long startTime = System.currentTimeMillis();
-        Object object = proceed();
-        long endTime = System.currentTimeMillis();
-        long executionTimeMs = endTime - startTime;
-
-        if (isTrackerEnabled) {
-            LOGGER.debug("{} ({})|{}| TrackerItemContext {} finished tracking on: {} - {}. Evaluating execution time...",
-                threadName, threadId, traceContextId, uuid, methodSignatureString, methodArgumentString);
-            ChronoUnit trackingTimeUnit = TimerNinjaUtil.getTrackingTimeUnit(methodSignature);
-            long executionTime = TimerNinjaUtil.convertFromMillis(executionTimeMs, trackingTimeUnit);
-            trackerItemContext.setExecutionTime(executionTime);
-            trackerItemContext.setTimeUnit(trackingTimeUnit);
-            LOGGER.debug("{} ({})|{}| TrackerItemContext: {}", threadName, threadId, traceContextId, trackerItemContext);
-            
-            // Record statistics if enabled
-            if (TimerNinjaConfiguration.getInstance().isStatisticsReportingEnabled()) {
-                String trackerId = TimerNinjaUtil.getTrackerId(methodSignature);
-                String className = methodSignature.getDeclaringType().getName();
-                String shortenedSignature = TimerNinjaUtil.getShortenedMethodSignature(methodSignature);
-                String parentTrackerId = trackingCtx.getPointerDepth() > 1 ? trackingCtx.getCurrentParentTrackerId() : null;
+        Object object = null;
+        try {
+            object = proceed();
+        } finally {
+            long endTime = System.currentTimeMillis();
+            long executionTimeMs = endTime - startTime;
+    
+            if (isTrackerEnabled) {
+                LOGGER.debug("{} ({})|{}| TrackerItemContext {} finished tracking on: {} - {}. Evaluating execution time...",
+                    threadName, threadId, traceContextId, uuid, methodSignatureString, methodArgumentString);
+                ChronoUnit trackingTimeUnit = TimerNinjaUtil.getTrackingTimeUnit(methodSignature);
+                long executionTime = TimerNinjaUtil.convertFromMillis(executionTimeMs, trackingTimeUnit);
+                trackerItemContext.setExecutionTime(executionTime);
+                trackerItemContext.setTimeUnit(trackingTimeUnit);
+                LOGGER.debug("{} ({})|{}| TrackerItemContext: {}", threadName, threadId, traceContextId, trackerItemContext);
                 
-                StatisticsCollector.getInstance().recordExecution(
-                    trackerId, className, shortenedSignature,
-                    executionTimeMs, threshold, parentTrackerId
-                );
-                trackingCtx.setCurrentParentTrackerId(trackerId);
+                // Record statistics if enabled
+                if (TimerNinjaConfiguration.getInstance().isStatisticsReportingEnabled()) {
+                    String trackerId = TimerNinjaUtil.getTrackerId(methodSignature);
+                    String className = methodSignature.getDeclaringType().getName();
+                    String shortenedSignature = TimerNinjaUtil.getShortenedMethodSignature(methodSignature);
+                    String parentTrackerId = trackingCtx.getPointerDepth() > 1 ? trackingCtx.getCurrentParentTrackerId() : null;
+                    
+                    StatisticsCollector.getInstance().recordExecution(
+                        trackerId, className, shortenedSignature,
+                        executionTimeMs, threshold, parentTrackerId
+                    );
+                    trackingCtx.setCurrentParentTrackerId(trackerId);
+                }
+                
+                trackingCtx.decreasePointerDepth();
             }
-            
-            trackingCtx.decreasePointerDepth();
-        }
-
-        if (trackingCtx.getPointerDepth() == 0) {
-            TimerNinjaUtil.logTimerContextTrace(trackingCtx);
-            localTrackingCtx.remove();
-            LOGGER.debug("{} ({})| TimerNinjaTracking context {} is completed and has been removed",
-                threadName, threadId, traceContextId);
+    
+            if (trackingCtx.getPointerDepth() == 0) {
+                TimerNinjaUtil.logTimerContextTrace(trackingCtx);
+                localTrackingCtx.remove();
+                LOGGER.debug("{} ({})| TimerNinjaTracking context {} is completed and has been removed",
+                    threadName, threadId, traceContextId);
+            }
         }
 
         return object;
@@ -140,42 +144,45 @@ public aspect TimeTrackingAspect {
 
         // Constructor invocation
         long startTime = System.currentTimeMillis();
-        Object object = proceed();
-        long endTime = System.currentTimeMillis();
-        long executionTimeMs = endTime - startTime;
-
-        if (isTrackerEnabled) {
-            LOGGER.debug("{} ({})|{}| TrackerItemContext {} finished tracking on constructor: {} - {}. Evaluating execution time...",
-                threadName, threadId, traceContextId, uuid, constructorSignatureString, constructorArgumentString);
-            ChronoUnit trackingTimeUnit = TimerNinjaUtil.getTrackingTimeUnit(constructorSignature);
-            trackerItemContext.setExecutionTime(TimerNinjaUtil.convertFromMillis(executionTimeMs, trackingTimeUnit));
-            trackerItemContext.setTimeUnit(trackingTimeUnit);
-            LOGGER.debug("{} ({})|{}| TrackerItemContext: {}", threadName, threadId, traceContextId, trackerItemContext);
-            
-            // Record statistics if enabled
-            if (TimerNinjaConfiguration.getInstance().isStatisticsReportingEnabled()) {
-                String trackerId = TimerNinjaUtil.getTrackerId(constructorSignature);
-                String className = constructorSignature.getDeclaringType().getName();
-                String shortenedSignature = TimerNinjaUtil.getShortenedConstructorSignature(constructorSignature);
-                String parentTrackerId = trackingCtx.getPointerDepth() > 1 ? trackingCtx.getCurrentParentTrackerId() : null;
+        Object object = null;
+        try {
+            object = proceed();
+        } finally {
+            long endTime = System.currentTimeMillis();
+            long executionTimeMs = endTime - startTime;
+    
+            if (isTrackerEnabled) {
+                LOGGER.debug("{} ({})|{}| TrackerItemContext {} finished tracking on constructor: {} - {}. Evaluating execution time...",
+                    threadName, threadId, traceContextId, uuid, constructorSignatureString, constructorArgumentString);
+                ChronoUnit trackingTimeUnit = TimerNinjaUtil.getTrackingTimeUnit(constructorSignature);
+                trackerItemContext.setExecutionTime(TimerNinjaUtil.convertFromMillis(executionTimeMs, trackingTimeUnit));
+                trackerItemContext.setTimeUnit(trackingTimeUnit);
+                LOGGER.debug("{} ({})|{}| TrackerItemContext: {}", threadName, threadId, traceContextId, trackerItemContext);
                 
-                StatisticsCollector.getInstance().recordExecution(
-                    trackerId, className, shortenedSignature,
-                    executionTimeMs, threshold, parentTrackerId
-                );
-                trackingCtx.setCurrentParentTrackerId(trackerId);
+                // Record statistics if enabled
+                if (TimerNinjaConfiguration.getInstance().isStatisticsReportingEnabled()) {
+                    String trackerId = TimerNinjaUtil.getTrackerId(constructorSignature);
+                    String className = constructorSignature.getDeclaringType().getName();
+                    String shortenedSignature = TimerNinjaUtil.getShortenedConstructorSignature(constructorSignature);
+                    String parentTrackerId = trackingCtx.getPointerDepth() > 1 ? trackingCtx.getCurrentParentTrackerId() : null;
+                    
+                    StatisticsCollector.getInstance().recordExecution(
+                        trackerId, className, shortenedSignature,
+                        executionTimeMs, threshold, parentTrackerId
+                    );
+                    trackingCtx.setCurrentParentTrackerId(trackerId);
+                }
+                
+                trackingCtx.decreasePointerDepth();
             }
-            
-            trackingCtx.decreasePointerDepth();
+    
+            if (trackingCtx.getPointerDepth() == 0) {
+                TimerNinjaUtil.logTimerContextTrace(trackingCtx);
+                localTrackingCtx.remove();
+                LOGGER.debug("{} ({})| TimerNinjaTracking context {} is completed and has been removed",
+                    threadName, threadId, traceContextId);
+            }
         }
-
-        if (trackingCtx.getPointerDepth() == 0) {
-            TimerNinjaUtil.logTimerContextTrace(trackingCtx);
-            localTrackingCtx.remove();
-            LOGGER.debug("{} ({})| TimerNinjaTracking context {} is completed and has been removed",
-                threadName, threadId, traceContextId);
-        }
-
         return object;
     }
 

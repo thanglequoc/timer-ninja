@@ -156,4 +156,78 @@ public class TimerNinjaIntegrationTest {
         assertTrue(foundStaticMethod, "Should find printBankInfo static method in output");
     }
 
+    @Test
+    public void testTrackingOnStaticMethodWithArgs() {
+        BankService.printWithArgs("hello", 5);
+
+        List<String> formattedMessages = logCaptureExtension.getFormattedMessages();
+        assertFalse(formattedMessages.isEmpty());
+
+        boolean foundWithArgs = false;
+        for (String message : formattedMessages) {
+            // Check for method name and argument values in the format name={value}
+            if (message.contains("printWithArgs") &&
+                    message.contains("message={hello}") &&
+                    message.contains("count={5}")) {
+                foundWithArgs = true;
+                break;
+            }
+        }
+        assertTrue(foundWithArgs, "Should find printWithArgs with arguments in output");
+    }
+
+    @Test
+    public void testTrackingOnStaticMethodException() {
+        try {
+            BankService.printAndThrow();
+        } catch (RuntimeException e) {
+            // Expected
+        }
+
+        List<String> formattedMessages = logCaptureExtension.getFormattedMessages();
+        assertFalse(formattedMessages.isEmpty());
+
+        boolean foundExceptionMethod = false;
+        for (String message : formattedMessages) {
+            if (message.contains("public static void printAndThrow()")) {
+                foundExceptionMethod = true;
+                break;
+            }
+        }
+        assertTrue(foundExceptionMethod, "Should track method even if it fails");
+    }
+
+    @Test
+    public void testTrackingOnNestedStaticMethods() {
+        BankService.nestedStaticMethodA();
+
+        List<String> formattedMessages = logCaptureExtension.getFormattedMessages();
+        assertFalse(formattedMessages.isEmpty());
+
+        boolean foundNestedA = false;
+        boolean foundNestedB = false;
+
+        // Find the context for nestedStaticMethodA
+        int indexA = -1;
+        for (int i = 0; i < formattedMessages.size(); i++) {
+            if (formattedMessages.get(i).contains("public static void nestedStaticMethodA()")) {
+                foundNestedA = true;
+                indexA = i;
+                break;
+            }
+        }
+
+        assertTrue(foundNestedA, "Should find nestedStaticMethodA");
+
+        // Look for nestedStaticMethodB after A
+        for (int i = indexA + 1; i < formattedMessages.size(); i++) {
+            if (formattedMessages.get(i).contains("public static void nestedStaticMethodB()")) {
+                foundNestedB = true;
+                break;
+            }
+        }
+
+        assertTrue(foundNestedB, "Should find nestedStaticMethodB nested after A");
+    }
+
 }

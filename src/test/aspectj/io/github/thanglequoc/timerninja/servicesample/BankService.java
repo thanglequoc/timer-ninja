@@ -124,4 +124,42 @@ public class BankService {
         }
     }
 
+    @TimerNinjaTracker(includeArgs = true, threshold = 0)
+    public static void printWithArgs(String message, int count) {
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @TimerNinjaTracker(threshold = 0)
+    public static void printAndThrow() {
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        throw new RuntimeException("Simulated static error");
+    }
+
+    @TimerNinjaTracker(threshold = 0)
+    public static void nestedStaticMethodA() {
+        try {
+            Thread.sleep(20);
+            nestedStaticMethodB();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @TimerNinjaTracker(threshold = 0)
+    public static void nestedStaticMethodB() {
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

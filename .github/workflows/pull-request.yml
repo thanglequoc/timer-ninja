@@ -5,6 +5,11 @@ on:
     branches:
       - master
 
+permissions:
+  checks: write
+  pull-requests: write
+  contents: read
+
 jobs:
   build-and-test:
     name: Build & Test (Java ${{ matrix.java }})

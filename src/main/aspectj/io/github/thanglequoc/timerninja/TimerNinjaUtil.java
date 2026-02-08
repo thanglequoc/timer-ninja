@@ -333,30 +333,53 @@ public class TimerNinjaUtil {
             logMessage("There isn't any tracker enabled in the tracking context");
             return;
         }
-        logMessage("{===== Start of trace context id: {} =====}", traceContextId);
-        int currentMethodPointerDepthWithThresholdMeet = -1; // unassigned
-        boolean withinThresholdZone = false;
 
+        // First, filter out items that are within threshold and check if any items should be logged
+        List<TrackerItemContext> itemsToLog = new ArrayList<>();
         for (TrackerItemContext item : timerNinjaThreadContext.getItemContextMap().values()) {
-            if (withinThresholdZone && item.getPointerDepth() == currentMethodPointerDepthWithThresholdMeet) {
-                withinThresholdZone = false;
+            boolean shouldLogItem = true;
+            
+            // Item has threshold enabled and is within limit - don't log it
+            if (item.isEnableThreshold() && item.getExecutionTime() < item.getThreshold()) {
+                shouldLogItem = false;
             }
+            
+            if (shouldLogItem) {
+                itemsToLog.add(item);
+            }
+        }
 
-            // Item has threshold & still within limit
-            if (!withinThresholdZone && (item.isEnableThreshold() && item.getExecutionTime() < item.getThreshold())) {
-                currentMethodPointerDepthWithThresholdMeet = item.getPointerDepth();
-                withinThresholdZone = true;
+        // If all items are filtered out by threshold, provide a summary instead of empty trace
+        if (itemsToLog.isEmpty()) {
+            long totalExecutionTime = 0;
+            long minTime = Long.MAX_VALUE;
+            long maxTime = 0;
+            
+            for (TrackerItemContext item : timerNinjaThreadContext.getItemContextMap().values()) {
+                totalExecutionTime += item.getExecutionTime();
+                if (item.getExecutionTime() < minTime) {
+                    minTime = item.getExecutionTime();
+                }
+                if (item.getExecutionTime() > maxTime) {
+                    maxTime = item.getExecutionTime();
+                }
             }
-            if (withinThresholdZone) {
-                continue;
-            }
+            
+            logMessage("All {} tracked items within threshold (min: {} ms, max: {} ms, total: {} ms)", 
+                timerNinjaThreadContext.getItemContextMap().size(), minTime, maxTime, totalExecutionTime);
+            return;
+        }
 
+        // Log items that exceed threshold or don't have threshold configured
+        logMessage("{===== Start of trace context id: {} =====}", traceContextId);
+
+        for (TrackerItemContext item : itemsToLog) {
             /*
             * Breakdown msg format
                 {}{}: Indent + Method name
                 - Args: [{}]: Args information (if included?)
                 - {} {}: Execution time + unit
-                ¤ [Threshold Exceed !!: {} ms]: If the threshold exceeded
+                ¤ [Threshold Exceed !!: {} ms]: If threshold exceeded
             *  */
             List<Object> argList = new ArrayList<>();
             StringBuilder msgFormat = new StringBuilder();

@@ -52,7 +52,7 @@ public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount)
 ```
 
 ## Installation
-To user Timer Ninja, you need to do two things: add the `timer-ninja` dependency and apply an AspectJ plugin so the library’s aspects can be compiled.
+To use Timer Ninja, you need to do two things: add the `timer-ninja` dependency and apply an AspectJ plugin so the library’s aspects can be compiled.
 
 ### Add the Timer Ninja dependency
 **Gradle**  

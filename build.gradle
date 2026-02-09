@@ -76,49 +76,6 @@ publishing {
     }
 }
 
-jreleaser {
-    project {
-        name = 'timer-ninja'
-        authors = ['ThangLeQuoc']
-        maintainers = ['ThangLeQuoc']
-        license = 'Apache-2.0'
-        links {
-            homepage = 'https://github.com/ThangLeQuoc/timer-ninja'
-        }
-        description = 'A handy Java utility to help you measure execution time of Java code'
-        longDescription = 'Timer Ninja is a lightweight Java library for effortlessly measuring method execution time. Just annotate your methods, and it automatically tracks duration, preserves the full call hierarchy, and outputs a clear, visual call tree with detailed timing and argument information.'
-    }
-
-    deploy {
-        maven {
-            mavenCentral {
-                sonatype {
-                    active = 'ALWAYS'
-                    url = 'https://central.sonatype.com/api/v1/publisher'
-                    username = 'changeit'
-                    password = 'changeit'
-                    authorization = 'BEARER'
-                    sign = true
-                    stagingRepository('build/staging-deploy')
-                }
-            }
-        }
-    }
-
-    signing {
-        active = 'RELEASE'
-        armored = true
-        mode = 'FILE'
-        files = true
-        artifacts = true
-        checksums = true
-
-        passphrase = 'changeit'
-        publicKey = './public_key.asc'
-        secretKey = './secret_key.asc'
-
-    }
-}
 
 javadoc {
     if(JavaVersion.current().isJava9Compatible()) {

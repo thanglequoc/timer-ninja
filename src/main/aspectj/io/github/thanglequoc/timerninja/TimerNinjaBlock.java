@@ -9,18 +9,24 @@ import static io.github.thanglequoc.timerninja.TimerNinjaThreadContext.LOGGER;
 /**
  * Utility class for measuring execution time of arbitrary code blocks.
  * <p>
- * This class provides static methods to wrap any code block with time tracking functionality,
- * similar to how {@link TimerNinjaTracker} annotation works for methods and constructors.
- * Code blocks tracked with this class will be integrated into the existing Timer Ninja
+ * This class provides static methods to wrap any code block with time tracking
+ * functionality,
+ * similar to how {@link TimerNinjaTracker} annotation works for methods and
+ * constructors.
+ * Code blocks tracked with this class will be integrated into the existing
+ * Timer Ninja
  * tracking context if called from within an already-tracked method.
  * </p>
  * <p>
- * The tracking context is managed by {@link TimerNinjaContextManager}, ensuring that
- * code blocks tracked with this class share the same trace context as methods and constructors
+ * The tracking context is managed by {@link TimerNinjaContextManager}, ensuring
+ * that
+ * code blocks tracked with this class share the same trace context as methods
+ * and constructors
  * tracked with {@link TimerNinjaTracker}.
  * </p>
  * <p>
  * Example usage:
+ * 
  * <pre>
  * TimerNinjaBlock.measure(() -> {
  *     // Your code here
@@ -29,6 +35,7 @@ import static io.github.thanglequoc.timerninja.TimerNinjaThreadContext.LOGGER;
  * </pre>
  * <p>
  * Example with custom name:
+ * 
  * <pre>
  * TimerNinjaBlock.measure("data processing", () -> {
  *     processData(data);
@@ -36,10 +43,11 @@ import static io.github.thanglequoc.timerninja.TimerNinjaThreadContext.LOGGER;
  * </pre>
  * <p>
  * Example with configuration:
+ * 
  * <pre>
  * BlockTrackerConfig config = new BlockTrackerConfig()
- *     .setTimeUnit(ChronoUnit.SECONDS)
- *     .setThreshold(5);
+ *         .setTimeUnit(ChronoUnit.SECONDS)
+ *         .setThreshold(5);
  * TimerNinjaBlock.measure("expensive operation", config, () -> {
  *     expensiveOperation();
  * });
@@ -71,17 +79,18 @@ public class TimerNinjaBlock {
      * Measures the execution time of a code block with custom configuration.
      *
      * @param blockName the name to identify this code block in the trace
-     * @param config the configuration for this code block (can be null for defaults)
+     * @param config    the configuration for this code block (can be null for
+     *                  defaults)
      * @param codeBlock the code block to measure
      */
     public static void measure(String blockName, BlockTrackerConfig config, Runnable codeBlock) {
         if (codeBlock == null) {
             throw new IllegalArgumentException("Code block cannot be null");
         }
-        
+
         // Use default configuration if none provided
         BlockTrackerConfig actualConfig = config != null ? config : new BlockTrackerConfig();
-        
+
         // Initialize tracking context if needed
         if (TimerNinjaContextManager.isTrackingContextNull()) {
             TimerNinjaContextManager.setLocalTrackingCtx(TimerNinjaContextManager.initTrackingContext());
@@ -93,10 +102,9 @@ public class TimerNinjaBlock {
         boolean isTrackerEnabled = actualConfig.isEnabled();
 
         TrackerItemContext trackerItemContext = new TrackerItemContext(
-            trackingCtx.getPointerDepth(), 
-            blockName
-        );
-        
+                trackingCtx.getPointerDepth(),
+                blockName);
+
         // Set threshold if configured
         if (actualConfig.getThreshold() > 0) {
             trackerItemContext.setThreshold(actualConfig.getThreshold());
@@ -109,7 +117,7 @@ public class TimerNinjaBlock {
 
         if (isTrackerEnabled) {
             LOGGER.debug("{} ({})|{}| TrackerItemContext {} initiated, start tracking on code block: {}",
-                threadName, threadId, traceContextId, uuid, blockName);
+                    threadName, threadId, traceContextId, uuid, blockName);
             trackingCtx.addItemContext(uuid, trackerItemContext);
             trackingCtx.increasePointerDepth();
         }
@@ -120,19 +128,38 @@ public class TimerNinjaBlock {
             codeBlock.run();
         } catch (Exception e) {
             LOGGER.warn("{} ({})|{}| Exception occurred in code block {}: {}",
-                threadName, threadId, traceContextId, blockName, e.getMessage());
+                    threadName, threadId, traceContextId, blockName, e.getMessage());
             throw e;
         } finally {
             long endTime = System.currentTimeMillis();
+            long executionTimeMs = endTime - startTime;
 
             if (isTrackerEnabled) {
-                LOGGER.debug("{} ({})|{}| TrackerItemContext {} finished tracking on code block: {}. Evaluating execution time...",
-                    threadName, threadId, traceContextId, uuid, blockName);
+                LOGGER.debug(
+                        "{} ({})|{}| TrackerItemContext {} finished tracking on code block: {}. Evaluating execution time...",
+                        threadName, threadId, traceContextId, uuid, blockName);
                 ChronoUnit trackingTimeUnit = actualConfig.getTimeUnit();
-                long executionTime = TimerNinjaUtil.convertFromMillis(endTime - startTime, trackingTimeUnit);
+                long executionTime = TimerNinjaUtil.convertFromMillis(executionTimeMs, trackingTimeUnit);
                 trackerItemContext.setExecutionTime(executionTime);
                 trackerItemContext.setTimeUnit(trackingTimeUnit);
-                LOGGER.debug("{} ({})|{}| TrackerItemContext: {}", threadName, threadId, traceContextId, trackerItemContext);
+                LOGGER.debug("{} ({})|{}| TrackerItemContext: {}", threadName, threadId, traceContextId,
+                        trackerItemContext);
+
+                // Record statistics if enabled
+                if (TimerNinjaConfiguration.getInstance().isStatisticsReportingEnabled()) {
+                    String trackerId = (actualConfig.getTrackerId() != null && !actualConfig.getTrackerId().isEmpty())
+                            ? actualConfig.getTrackerId()
+                            : "Block:" + blockName;
+                    int threshold = actualConfig.getThreshold();
+                    String parentTrackerId = trackingCtx.getPointerDepth() > 1 ? trackingCtx.getCurrentParentTrackerId()
+                            : null;
+
+                    StatisticsCollector.getInstance().recordExecution(
+                            trackerId, "TimerNinjaBlock", blockName,
+                            executionTimeMs, threshold, parentTrackerId);
+                    trackingCtx.setCurrentParentTrackerId(trackerId);
+                }
+
                 trackingCtx.decreasePointerDepth();
             }
 
@@ -141,7 +168,7 @@ public class TimerNinjaBlock {
                 TimerNinjaUtil.logTimerContextTrace(trackingCtx);
                 localTrackingCtx.remove();
                 LOGGER.debug("{} ({})| TimerNinjaTracking context {} is completed and has been removed",
-                    threadName, threadId, traceContextId);
+                        threadName, threadId, traceContextId);
             }
         }
     }
@@ -150,7 +177,7 @@ public class TimerNinjaBlock {
      * Measures the execution time of a code block that returns a value.
      *
      * @param codeBlock the code block to measure
-     * @param <T> the return type of the code block
+     * @param <T>       the return type of the code block
      * @return the result of the code block execution
      */
     public static <T> T measure(Supplier<T> codeBlock) {
@@ -158,11 +185,12 @@ public class TimerNinjaBlock {
     }
 
     /**
-     * Measures the execution time of a code block that returns a value with a custom name.
+     * Measures the execution time of a code block that returns a value with a
+     * custom name.
      *
      * @param blockName the name to identify this code block in the trace
      * @param codeBlock the code block to measure
-     * @param <T> the return type of the code block
+     * @param <T>       the return type of the code block
      * @return the result of the code block execution
      */
     public static <T> T measure(String blockName, Supplier<T> codeBlock) {
@@ -170,22 +198,24 @@ public class TimerNinjaBlock {
     }
 
     /**
-     * Measures the execution time of a code block that returns a value with custom configuration.
+     * Measures the execution time of a code block that returns a value with custom
+     * configuration.
      *
      * @param blockName the name to identify this code block in the trace
-     * @param config the configuration for this code block (can be null for defaults)
+     * @param config    the configuration for this code block (can be null for
+     *                  defaults)
      * @param codeBlock the code block to measure
-     * @param <T> the return type of the code block
+     * @param <T>       the return type of the code block
      * @return the result of the code block execution
      */
     public static <T> T measure(String blockName, BlockTrackerConfig config, Supplier<T> codeBlock) {
         if (codeBlock == null) {
             throw new IllegalArgumentException("Code block cannot be null");
         }
-        
+
         // Use default configuration if none provided
         BlockTrackerConfig actualConfig = config != null ? config : new BlockTrackerConfig();
-        
+
         // Initialize tracking context if needed
         if (TimerNinjaContextManager.isTrackingContextNull()) {
             TimerNinjaContextManager.setLocalTrackingCtx(TimerNinjaContextManager.initTrackingContext());
@@ -197,10 +227,9 @@ public class TimerNinjaBlock {
         boolean isTrackerEnabled = actualConfig.isEnabled();
 
         TrackerItemContext trackerItemContext = new TrackerItemContext(
-            trackingCtx.getPointerDepth(), 
-            blockName
-        );
-        
+                trackingCtx.getPointerDepth(),
+                blockName);
+
         // Set threshold if configured
         if (actualConfig.getThreshold() > 0) {
             trackerItemContext.setThreshold(actualConfig.getThreshold());
@@ -213,7 +242,7 @@ public class TimerNinjaBlock {
 
         if (isTrackerEnabled) {
             LOGGER.debug("{} ({})|{}| TrackerItemContext {} initiated, start tracking on code block: {}",
-                threadName, threadId, traceContextId, uuid, blockName);
+                    threadName, threadId, traceContextId, uuid, blockName);
             trackingCtx.addItemContext(uuid, trackerItemContext);
             trackingCtx.increasePointerDepth();
         }
@@ -225,19 +254,38 @@ public class TimerNinjaBlock {
             result = codeBlock.get();
         } catch (Exception e) {
             LOGGER.warn("{} ({})|{}| Exception occurred in code block {}: {}",
-                threadName, threadId, traceContextId, blockName, e.getMessage());
+                    threadName, threadId, traceContextId, blockName, e.getMessage());
             throw e;
         } finally {
             long endTime = System.currentTimeMillis();
+            long executionTimeMs = endTime - startTime;
 
             if (isTrackerEnabled) {
-                LOGGER.debug("{} ({})|{}| TrackerItemContext {} finished tracking on code block: {}. Evaluating execution time...",
-                    threadName, threadId, traceContextId, uuid, blockName);
+                LOGGER.debug(
+                        "{} ({})|{}| TrackerItemContext {} finished tracking on code block: {}. Evaluating execution time...",
+                        threadName, threadId, traceContextId, uuid, blockName);
                 ChronoUnit trackingTimeUnit = actualConfig.getTimeUnit();
-                long executionTime = TimerNinjaUtil.convertFromMillis(endTime - startTime, trackingTimeUnit);
+                long executionTime = TimerNinjaUtil.convertFromMillis(executionTimeMs, trackingTimeUnit);
                 trackerItemContext.setExecutionTime(executionTime);
                 trackerItemContext.setTimeUnit(trackingTimeUnit);
-                LOGGER.debug("{} ({})|{}| TrackerItemContext: {}", threadName, threadId, traceContextId, trackerItemContext);
+                LOGGER.debug("{} ({})|{}| TrackerItemContext: {}", threadName, threadId, traceContextId,
+                        trackerItemContext);
+
+                // Record statistics if enabled
+                if (TimerNinjaConfiguration.getInstance().isStatisticsReportingEnabled()) {
+                    String trackerId = (actualConfig.getTrackerId() != null && !actualConfig.getTrackerId().isEmpty())
+                            ? actualConfig.getTrackerId()
+                            : "Block:" + blockName;
+                    int threshold = actualConfig.getThreshold();
+                    String parentTrackerId = trackingCtx.getPointerDepth() > 1 ? trackingCtx.getCurrentParentTrackerId()
+                            : null;
+
+                    StatisticsCollector.getInstance().recordExecution(
+                            trackerId, "TimerNinjaBlock", blockName,
+                            executionTimeMs, threshold, parentTrackerId);
+                    trackingCtx.setCurrentParentTrackerId(trackerId);
+                }
+
                 trackingCtx.decreasePointerDepth();
             }
 
@@ -246,7 +294,7 @@ public class TimerNinjaBlock {
                 TimerNinjaUtil.logTimerContextTrace(trackingCtx);
                 localTrackingCtx.remove();
                 LOGGER.debug("{} ({})| TimerNinjaTracking context {} is completed and has been removed",
-                    threadName, threadId, traceContextId);
+                        threadName, threadId, traceContextId);
             }
         }
 

@@ -40,3 +40,8 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Security - Keys & Credentials ###
+secret_key.asc
+*.asc
+!public_key.asc

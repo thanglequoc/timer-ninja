@@ -84,7 +84,7 @@ public class TimerNinjaBlock {
         
         // Initialize tracking context if needed
         if (TimerNinjaContextManager.isTrackingContextNull()) {
-            TimerNinjaContextManager.setLocalTrackingCtx(TimerNinjaContextManager.initTrackingContext());
+            TimerNinjaContextManager.initTrackingContext();
         }
 
         ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = TimerNinjaContextManager.getLocalTrackingCtx();
@@ -188,7 +188,7 @@ public class TimerNinjaBlock {
         
         // Initialize tracking context if needed
         if (TimerNinjaContextManager.isTrackingContextNull()) {
-            TimerNinjaContextManager.setLocalTrackingCtx(TimerNinjaContextManager.initTrackingContext());
+            TimerNinjaContextManager.initTrackingContext();
         }
 
         ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = TimerNinjaContextManager.getLocalTrackingCtx();

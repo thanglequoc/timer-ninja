@@ -27,8 +27,8 @@ deploy:
       sonatype:
         active: ALWAYS
         url: https://central.sonatype.com/api/v1/publisher
-        username: ${SONATYPE_USERNAME}
-        password: ${SONATYPE_PASSWORD}
+        username: ${SONARTYPE_USERNAME}
+        password: ${SONARTYPE_PASSWORD}
         authorization: BEARER
         sign: true
         stagingRepositories:

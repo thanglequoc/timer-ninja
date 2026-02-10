@@ -46,7 +46,7 @@ public class TimerNinjaContextManager {
         Thread currentThread = Thread.currentThread();
         TimerNinjaThreadContext.LOGGER.debug("{} ({})| TimerNinjaTracking context {} initiated",
             currentThread.getName(),
-            currentThread.getId(),
+            currentThread.threadId(),
             timerNinjaThreadContext.getTraceContextId()
         );
     }

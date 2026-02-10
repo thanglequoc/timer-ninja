@@ -15,14 +15,20 @@ public class TimerNinjaConfiguration {
 
     /**
      * Returns the singleton instance of {@link TimerNinjaConfiguration}.
+     * Thread-safe using the Initialization-on-Demand Holder Idiom.
      *
      * @return the singleton configuration instance
      */
     public static TimerNinjaConfiguration getInstance() {
-        if (instance == null) {
-            instance = new TimerNinjaConfiguration();
-        }
-        return instance;
+        return Holder.INSTANCE;
+    }
+
+    /**
+     * Inner static holder class for lazy initialization.
+     * The JVM guarantees thread-safe initialization of static final fields.
+     */
+    private static class Holder {
+        static final TimerNinjaConfiguration INSTANCE = new TimerNinjaConfiguration();
     }
 
     /**

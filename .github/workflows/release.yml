@@ -33,16 +33,14 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       
-      - name: Build project
-        uses: gradle/gradle-build-action@v3
-        with:
-          gradle-home-cache-cleanup: true
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
       
       - name: Run tests
         run: ./gradlew clean build test --no-daemon
       
-      - name: Publish to Maven Local
-        run: ./gradlew publishToMavenLocal --no-daemon
+      - name: Publish to staging repository
+        run: ./gradlew publishAllPublicationsToStagingRepository --no-daemon
       
       - name: Release with JReleaser
         env:

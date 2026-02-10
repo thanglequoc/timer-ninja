@@ -1,0 +1,29 @@
+name: Dependency Review
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          # Fail the workflow if vulnerabilities are found
+          fail-on-severity: moderate
+          # Deny changes to licenses
+          deny-licenses: GPL-3.0, AGPL-3.0
+          # Allowlist licenses (optional)
+          # allow-licenses: MIT, Apache-2.0
+          # Minimum vulnerability severity to check for
+          min-severity: low

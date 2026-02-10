@@ -13,11 +13,62 @@ import org.aspectj.lang.reflect.CodeSignature;
 import static io.github.thanglequoc.timerninja.TimerNinjaThreadContext.LOGGER;
 
 /**
- * TimeTracking aspect definition
- * */
+ * AspectJ aspect that provides automatic time tracking for methods and constructors annotated with {@link TimerNinjaTracker}.
+ * <p>
+ * This aspect intercepts method and constructor executions at runtime, measuring their execution time
+ * and integrating the results into a shared tracking context managed by {@link TimerNinjaContextManager}.
+ * The tracking supports nested calls, where methods tracked with {@code @TimerNinjaTracker} that call
+ * other tracked methods will have their execution times aggregated in a hierarchical trace.
+ * </p>
+ * <p>
+ * <b>Key Features:</b>
+ * </p>
+ * <ul>
+ *   <li>Automatic interception via AspectJ pointcuts</li>
+ *   <li>Support for both methods and constructors</li>
+ *   <li>Nested tracking with hierarchical trace output</li>
+ *   <li>Thread-local context management for multi-threaded applications</li>
+ *   <li>Configurable time units (milliseconds, seconds, microseconds)</li>
+ *   <li>Threshold filtering to exclude fast operations from traces</li>
+ *   <li>Optional argument logging for debugging</li>
+ * </ul>
+ * <p>
+ * <b>How It Works:</b>
+ * </p>
+ * <ol>
+ *   <li>The aspect defines pointcuts to match methods and constructors with {@code @TimerNinjaTracker}</li>
+ *   <li>Around advice wraps the execution of matched methods/constructors</li>
+ *   <li>A {@link TrackerItemContext} is created to store tracking information</li>
+ *   <li>Execution time is measured by capturing timestamps before and after method invocation</li>
+ *   <li>When the root method completes, the complete trace is logged via {@link TimerNinjaUtil#logTimerContextTrace}</li>
+ * </ol>
+ * <p>
+ * <b>Pointcuts:</b>
+ * </p>
+ * <ul>
+ *   <li>{@code methodAnnotatedWithTimerNinjaTracker()}: Matches any method execution with {@code @TimerNinjaTracker}</li>
+ *   <li>{@code constructorAnnotatedWithTimerNinjaTracker()}: Matches any constructor execution with {@code @TimerNinjaTracker}</li>
+ * </ul>
+ * <p>
+ * <b>Thread Safety:</b>
+ * </p>
+ * <p>
+ * This aspect is thread-safe. Each thread maintains its own tracking context via ThreadLocal storage
+ * managed by {@link TimerNinjaContextManager}, allowing concurrent tracking without interference.
+ * </p>
+ * <p>
+ * <b>Example Output:</b>
+ * </p>
+ * <pre>
+ * Timer Ninja trace context id: 123e4567-e89b-12d3-a456-426614174000 | Trace timestamp: 2023-03-27T11:24:46.948Z
+ * {===== Start of trace context id: 123e4567-e89b-12d3-a456-426614174000 =====}
+ * public void BankService.processPayment(BankCard card, long amount) - Args: [card={type='VISA', number='****1234'}, amount=500] - 150 ms
+ *   |-- public boolean CardService.validateCard(BankCard card) - Args: [card={type='VISA', number='****1234'}] - 25 ms
+ *   |-- public void NotificationService.sendPaymentConfirmation(User user) - 75 ms
+ * {====== End of trace context id: 123e4567-e89b-12d3-a456-426614174000 ======}
+ * </pre>
+ */
 public aspect TimeTrackingAspect {
-
-    private static ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = initTrackingContext();
 
     /**
      * Point cut is any method, or constructor annotated with @TimerNinjaTracker
@@ -33,10 +84,11 @@ public aspect TimeTrackingAspect {
         Signature signature = staticPart.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
 
-        if (isTrackingContextNull()) {
-            localTrackingCtx = initTrackingContext();
+        if (TimerNinjaContextManager.isTrackingContextNull()) {
+            TimerNinjaContextManager.initTrackingContext();
         }
 
+        ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = TimerNinjaContextManager.getLocalTrackingCtx();
         TimerNinjaThreadContext trackingCtx = localTrackingCtx.get();
         String traceContextId = trackingCtx.getTraceContextId();
         boolean isTrackerEnabled = TimerNinjaUtil.isTimerNinjaTrackerEnabled(methodSignature);
@@ -95,9 +147,10 @@ public aspect TimeTrackingAspect {
         Signature signature = staticPart.getSignature();
         ConstructorSignature constructorSignature = (ConstructorSignature) signature;
 
-        if (isTrackingContextNull()) {
-            localTrackingCtx = initTrackingContext();
+        if (TimerNinjaContextManager.isTrackingContextNull()) {
+            TimerNinjaContextManager.initTrackingContext();
         }
+        ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = TimerNinjaContextManager.getLocalTrackingCtx();
         TimerNinjaThreadContext trackingCtx = localTrackingCtx.get();
         String traceContextId = trackingCtx.getTraceContextId();
         boolean isTrackerEnabled = TimerNinjaUtil.isTimerNinjaTrackerEnabled(constructorSignature);
@@ -147,23 +200,4 @@ public aspect TimeTrackingAspect {
         return object;
     }
 
-    /**
-     * Static method to initiate a new Timer Ninja tracking context associated with the current execution thread
-     * */
-    private static ThreadLocal<TimerNinjaThreadContext> initTrackingContext() {
-        Thread currentThread = Thread.currentThread();
-        ThreadLocal<TimerNinjaThreadContext> timerNinjaLocalThreadContext = new ThreadLocal<>();
-        TimerNinjaThreadContext timerNinjaThreadContext = new TimerNinjaThreadContext();
-        timerNinjaLocalThreadContext.set(timerNinjaThreadContext);
-        LOGGER.debug("{} ({})| TimerNinjaTracking context {} initiated",
-            currentThread.getName(),
-            currentThread.getId(),
-            timerNinjaThreadContext.getTraceContextId()
-        );
-        return timerNinjaLocalThreadContext;
-    }
-
-    private static boolean isTrackingContextNull() {
-        return localTrackingCtx.get() == null;
-    }
 }

@@ -32,7 +32,7 @@ public aspect TimeTrackingAspect {
         MethodSignature methodSignature = (MethodSignature) signature;
 
         if (TimerNinjaContextManager.isTrackingContextNull()) {
-            TimerNinjaContextManager.setLocalTrackingCtx(TimerNinjaContextManager.initTrackingContext());
+            TimerNinjaContextManager.initTrackingContext();
         }
 
         ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = TimerNinjaContextManager.getLocalTrackingCtx();
@@ -95,7 +95,7 @@ public aspect TimeTrackingAspect {
         ConstructorSignature constructorSignature = (ConstructorSignature) signature;
 
         if (TimerNinjaContextManager.isTrackingContextNull()) {
-            TimerNinjaContextManager.setLocalTrackingCtx(TimerNinjaContextManager.initTrackingContext());
+            TimerNinjaContextManager.initTrackingContext();
         }
         ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = TimerNinjaContextManager.getLocalTrackingCtx();
         TimerNinjaThreadContext trackingCtx = localTrackingCtx.get();

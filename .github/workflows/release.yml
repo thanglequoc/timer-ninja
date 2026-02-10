@@ -1,4 +1,4 @@
-name: Release
+name: Release - Publish to Sonatype Maven Central
 
 on:
   workflow_dispatch:

@@ -39,10 +39,7 @@ jobs:
       - name: Run tests
         run: ./gradlew clean build test --no-daemon
       
-      - name: Publish to staging repository
-        run: ./gradlew publishAllPublicationsToStagingRepository --no-daemon
-      
-      - name: Release with JReleaser
+      - name: Full release with JReleaser
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JRELEASER_GITHUB_USERNAME: ${{ github.actor }}

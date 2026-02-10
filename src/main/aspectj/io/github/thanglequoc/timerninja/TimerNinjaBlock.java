@@ -105,7 +105,7 @@ public class TimerNinjaBlock {
         String uuid = UUID.randomUUID().toString();
         Thread currentThread = Thread.currentThread();
         String threadName = currentThread.getName();
-        long threadId = currentThread.threadId();
+        long threadId = currentThread.getId();
 
         if (isTrackerEnabled) {
             LOGGER.debug("{} ({})|{}| TrackerItemContext {} initiated, start tracking on code block: {}",
@@ -209,7 +209,7 @@ public class TimerNinjaBlock {
         String uuid = UUID.randomUUID().toString();
         Thread currentThread = Thread.currentThread();
         String threadName = currentThread.getName();
-        long threadId = currentThread.threadId();
+        long threadId = currentThread.getId();
 
         if (isTrackerEnabled) {
             LOGGER.debug("{} ({})|{}| TrackerItemContext {} initiated, start tracking on code block: {}",

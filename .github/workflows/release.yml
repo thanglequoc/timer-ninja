@@ -47,7 +47,8 @@ jobs:
           JRELEASER_DEPLOY_MAVEN_MAVENCENTRAL_SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
           echo "=== JReleaser Environment Variables ==="
-          echo "JRELEASER_DEPLOY_MAVEN_MAVENCENTRAL_SONATYPE_PASSWORD is set: $([ -n "$JRELEASER_DEPLOY_MAVEN_MAVENCENTRAL_SONATYPE_PASSWORD" ] && echo YES || echo NO)"
+          echo "SONATYPE_USERNAME is set: $([ -n "$JRELEASER_DEPLOY_MAVEN_MAVENCENTRAL_SONATYPE_USERNAME" ] && echo YES || echo NO)"
+          echo "SONATYPE_PASSWORD is set: $([ -n "$JRELEASER_DEPLOY_MAVEN_MAVENCENTRAL_SONATYPE_PASSWORD" ] && echo YES || echo NO)"
           env | grep JRELEASER | sort
           echo "====================================="
       

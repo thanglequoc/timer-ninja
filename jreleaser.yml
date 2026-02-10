@@ -31,6 +31,8 @@ deploy:
         password: ${SONATYPE_PASSWORD}
         authorization: BEARER
         sign: true
+        stagingRepositories:
+          - build/staging-deploy
 
 signing:
   active: RELEASE

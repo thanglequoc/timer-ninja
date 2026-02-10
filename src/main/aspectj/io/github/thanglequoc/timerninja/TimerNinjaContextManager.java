@@ -13,8 +13,9 @@ public class TimerNinjaContextManager {
 
     /**
      * The shared ThreadLocal tracking context used by both the aspect and code block tracking.
+     * This is a single, stable reference shared across all threads where each thread stores its own value.
      */
-    private static ThreadLocal<TimerNinjaThreadContext> localTrackingCtx;
+    private static final ThreadLocal<TimerNinjaThreadContext> localTrackingCtx = new ThreadLocal<>();
 
     /**
      * Gets the current tracking context for the current thread.
@@ -26,39 +27,27 @@ public class TimerNinjaContextManager {
     }
 
     /**
-     * Sets the tracking context for the current thread.
-     * This is typically called by the aspect or block tracking when initializing a new context.
-     *
-     * @param context the ThreadLocal tracking context to set
-     */
-    public static void setLocalTrackingCtx(ThreadLocal<TimerNinjaThreadContext> context) {
-        localTrackingCtx = context;
-    }
-
-    /**
      * Checks if the current tracking context is null.
      *
      * @return true if tracking context is null, false otherwise
      */
     public static boolean isTrackingContextNull() {
-        return localTrackingCtx == null || localTrackingCtx.get() == null;
+        return localTrackingCtx.get() == null;
     }
 
     /**
      * Initializes a new tracking context for the current thread.
-     *
-     * @return a new ThreadLocal containing a new TimerNinjaThreadContext
+     * Instead of creating a new ThreadLocal object, this sets a new value
+     * in the existing ThreadLocal for the current thread.
      */
-    public static ThreadLocal<TimerNinjaThreadContext> initTrackingContext() {
-        Thread currentThread = Thread.currentThread();
-        ThreadLocal<TimerNinjaThreadContext> timerNinjaLocalThreadContext = new ThreadLocal<>();
+    public static void initTrackingContext() {
         TimerNinjaThreadContext timerNinjaThreadContext = new TimerNinjaThreadContext();
-        timerNinjaLocalThreadContext.set(timerNinjaThreadContext);
+        localTrackingCtx.set(timerNinjaThreadContext);
+        Thread currentThread = Thread.currentThread();
         TimerNinjaThreadContext.LOGGER.debug("{} ({})| TimerNinjaTracking context {} initiated",
             currentThread.getName(),
             currentThread.getId(),
             timerNinjaThreadContext.getTraceContextId()
         );
-        return timerNinjaLocalThreadContext;
     }
 }

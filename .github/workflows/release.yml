@@ -58,7 +58,7 @@ jobs:
           JRELEASER_DEPLOY_MAVEN_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           JRELEASER_DEPLOY_MAVEN_MAVENCENTRAL_SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
-          ./gradlew jreleaserFullRelease --no-daemon
+          ./gradlew jreleaserFullRelease --no-daemon --stacktrace
 
       - name: JReleaser output
         if: always()

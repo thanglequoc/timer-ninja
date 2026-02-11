@@ -248,10 +248,9 @@ public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount)
 **Sample output:**
 > public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount) - Args: [sourceUserId={1}, targetUserId={2}, amount={3000}] - 1037 ms ¤ [Threshold Exceed !!: 200 ms]
 
-**Sample output:**
-> public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount) - Args: [sourceUserId={1}, targetUserId={2}, amount={3000}] - 1037 ms ¤ [Threshold Exceed !!: 200 ms]
 
-## Block Tracking with TimerNinjaBlock ⚡ (New in 1.3.0)
+
+## Block Tracking with `TimerNinjaBlock`
 
 TimerNinjaBlock allows you to measure arbitrary code blocks within a method without extracting separate methods. This is perfect for tracking specific phases or operations inside a method.
 
@@ -269,41 +268,13 @@ public void processOrder(Order order) {
 }
 ```
 
-### Block with Return Value
+Use TimerNinjaBlock for granular tracking within a method without creating separate tracked methods.
 
-```java
-public void processOrder(Order order) {
-    String result = TimerNinjaBlock.measure("fetch data", () -> {
-        return api.fetchOrderData(order.getId());
-    });
-    
-    System.out.println(result);
-}
-```
+For more advanced block tracking usage, see the [User Guide Wiki](https://github.com/thanglequoc/timer-ninja/wiki/User-Guide#block-tracking).
 
-### Block with Custom Configuration
 
-```java
-import java.time.temporal.ChronoUnit;
 
-public void processOrder(Order order) {
-    BlockTrackerConfig config = new BlockTrackerConfig()
-        .setTimeUnit(ChronoUnit.SECONDS)
-        .setThreshold(2);
-    
-    TimerNinjaBlock.measure("long operation", config, () -> {
-        performLongRunningTask(order);
-    });
-}
-```
-
-**Sample output:**
-> [Block] database query - 42 ms  
-> [Block] fetch data - 125 ms
-
-Use TimerNinjaBlock when you need granular tracking within a method without creating separate tracked methods.
-
-## Reading the time trace output## Reading the time trace output
+## Reading the time trace output
 Once the method is executed, you should be able to find the result similar to this one in the output/log
 
 ```log
@@ -319,6 +290,10 @@ In detail:
 Any sequence execution of other annotated tracker methods inside the parent method will also be accounted for in the existing trace context.  
 `Trace timestamp`: The timestamp when the trace context is initiated, in UTC timezone.  
 `Begin-end of trace context`: The detailed execution time of each method. The `|--` sign indicate the call to this method originated from the above parent method, which help to visualize the execution stacktrace.
+
+
+## User Guide
+For comprehensive documentation, examples, and best practices on using the Timer-Ninja library efficiently, visit the [Wiki page](https://github.com/thanglequoc/timer-ninja/wiki/User-Guide).
 
 ## Troubleshooting
 If you need to troubleshoot, you can toggle the `DEBUG` log level on logger `io.github.thanglequoc.timerninja.TimerNinjaThreadContext`.

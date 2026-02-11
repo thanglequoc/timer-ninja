@@ -1,0 +1,33 @@
+title: Timer Ninja
+description: "A sneaky library for Java Method Timing — Track execution time with a single annotation. Zero boilerplate."
+url: "https://thanglequoc.github.io"
+baseurl: "/timer-ninja"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor

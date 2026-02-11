@@ -1,0 +1,24 @@
+---
+layout: default
+title: "404 — Page Not Found"
+permalink: /404.html
+---
+
+<section class="section" style="text-align: center; min-height: 60vh; display: flex; align-items: center; justify-content: center; padding-top: var(--navbar-height);">
+  <div class="container">
+    <div class="hero__mascot" style="width: 120px; height: 120px; margin: 0 auto 2rem;">
+      <img src="{{ '/assets/images/mascot.png' | relative_url }}" alt="Timer Ninja mascot">
+    </div>
+    <h1 style="font-size: 4rem; margin-bottom: 0.5rem;">
+      <span class="text-gradient">404</span>
+    </h1>
+    <h2 style="font-weight: 600; margin-bottom: 1rem;">This page has vanished like a ninja</h2>
+    <p style="max-width: 400px; margin: 0 auto 2rem; font-size: 1.1rem;">
+      The page you're looking for doesn't exist or has been moved.
+    </p>
+    <a href="{{ '/' | relative_url }}" class="btn btn--primary">
+      Back to Home
+      <span>&rarr;</span>
+    </a>
+  </div>
+</section>

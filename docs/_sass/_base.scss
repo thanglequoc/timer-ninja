@@ -1,0 +1,258 @@
+// ==============================================
+// Base Styles — Timer Ninja
+// ==============================================
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--navbar-height) + 1rem);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: $font-size-base;
+  line-height: 1.7;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition: background-color $transition-normal, color $transition-normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-text);
+  margin-bottom: $space-md;
+}
+
+h1 { font-size: 2.75rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+  margin-bottom: $space-md;
+  color: var(--color-text-muted);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: var(--color-primary-dark);
+  }
+}
+
+// Code
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-code-border);
+  border-radius: $radius-sm;
+  padding: 0.15em 0.4em;
+  color: var(--color-primary-dark);
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-code-border);
+  border-radius: $radius-md;
+  padding: $space-lg;
+  overflow-x: auto;
+  margin-bottom: $space-lg;
+
+  code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+  }
+}
+
+// Container
+.container {
+  max-width: $bp-xl;
+  margin: 0 auto;
+  padding: 0 $space-xl;
+
+  @media (max-width: $bp-md) {
+    padding: 0 $space-lg;
+  }
+}
+
+.container--narrow {
+  max-width: 900px;
+}
+
+// Section
+.section {
+  padding: $space-4xl 0;
+
+  @media (max-width: $bp-md) {
+    padding: $space-3xl 0;
+  }
+}
+
+.section__header {
+  text-align: center;
+  margin-bottom: $space-3xl;
+
+  h2 {
+    font-size: 2.25rem;
+    margin-bottom: $space-sm;
+  }
+
+  p {
+    font-size: 1.15rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+// Badge
+.badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35em 0.9em;
+  border-radius: $radius-pill;
+  background: var(--color-primary-glow);
+  color: var(--color-primary);
+  letter-spacing: 0.03em;
+}
+
+// Buttons
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  border-radius: $radius-pill;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all $transition-normal;
+  text-decoration: none;
+
+  &--primary {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+
+    &:hover {
+      background: var(--color-primary-dark);
+      border-color: var(--color-primary-dark);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--color-primary-glow);
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border);
+
+    &:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Highlight/accent mark
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Selection
+::selection {
+  background: rgba($primary, 0.25);
+  color: var(--color-text);
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+// HR
+hr {
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+  margin: $space-2xl 0;
+}
+
+// Image
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Table
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: $space-lg;
+  font-size: 0.9rem;
+
+  th, td {
+    padding: $space-sm $space-md;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  th {
+    font-weight: 600;
+    color: var(--color-text);
+    background: var(--color-surface);
+  }
+
+  td {
+    color: var(--color-text-muted);
+  }
+
+  code {
+    font-size: 0.8rem;
+  }
+}

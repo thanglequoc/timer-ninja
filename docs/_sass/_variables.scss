@@ -1,0 +1,109 @@
+// ==============================================
+// Design Tokens — Timer Ninja
+// ==============================================
+
+// Brand colors
+$primary:       #46bfc6;
+$primary-dark:  #3aa3a9;
+$primary-light: #6dd5db;
+$primary-glow:  rgba(70, 191, 198, 0.25);
+
+// Light mode
+$light-bg:          #ffffff;
+$light-surface:     #f5fafa;
+$light-surface-alt: #eaf5f5;
+$light-text:        #1a2b3c;
+$light-text-muted:  #5a6b7c;
+$light-border:      #d4e8e8;
+$light-code-bg:     #f0f6f6;
+$light-code-border: #d4e8e8;
+$light-card-bg:     #ffffff;
+$light-card-shadow: rgba(70, 191, 198, 0.08);
+
+// Dark mode
+$dark-bg:          #0d1520;
+$dark-surface:     #14202e;
+$dark-surface-alt: #1a2b3c;
+$dark-text:        #e8f0f2;
+$dark-text-muted:  #8fa3b2;
+$dark-border:      #243444;
+$dark-code-bg:     #111d2b;
+$dark-code-border: #243444;
+$dark-card-bg:     #14202e;
+$dark-card-shadow: rgba(0, 0, 0, 0.3);
+
+// Accent / semantic
+$accent-red:    #e74c5a;
+$accent-green:  #2ecc71;
+$accent-yellow: #f0c040;
+$accent-orange: #f39c12;
+
+// Typography
+$font-body:   'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-mono:   'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+$font-size-base: 1rem;
+
+// Spacing
+$space-xs:  0.25rem;
+$space-sm:  0.5rem;
+$space-md:  1rem;
+$space-lg:  1.5rem;
+$space-xl:  2rem;
+$space-2xl: 3rem;
+$space-3xl: 4rem;
+$space-4xl: 6rem;
+
+// Breakpoints
+$bp-sm:  576px;
+$bp-md:  768px;
+$bp-lg:  1024px;
+$bp-xl:  1280px;
+
+// Border radius
+$radius-sm:  6px;
+$radius-md:  10px;
+$radius-lg:  16px;
+$radius-xl:  24px;
+$radius-pill: 50px;
+
+// Transition
+$transition-fast:   0.15s ease;
+$transition-normal: 0.3s ease;
+$transition-slow:   0.5s ease;
+
+// Z-index
+$z-navbar:    1000;
+$z-modal:     2000;
+$z-tooltip:   3000;
+
+// ===== CSS Custom Properties (for theming) =====
+:root {
+  --color-primary: #{$primary};
+  --color-primary-dark: #{$primary-dark};
+  --color-primary-light: #{$primary-light};
+  --color-primary-glow: #{$primary-glow};
+
+  --color-bg: #{$light-bg};
+  --color-surface: #{$light-surface};
+  --color-surface-alt: #{$light-surface-alt};
+  --color-text: #{$light-text};
+  --color-text-muted: #{$light-text-muted};
+  --color-border: #{$light-border};
+  --color-code-bg: #{$light-code-bg};
+  --color-code-border: #{$light-code-border};
+  --color-card-bg: #{$light-card-bg};
+  --color-card-shadow: #{$light-card-shadow};
+
+  --color-red: #{$accent-red};
+  --color-green: #{$accent-green};
+  --color-yellow: #{$accent-yellow};
+
+  --font-body: #{$font-body};
+  --font-mono: #{$font-mono};
+
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+
+  --navbar-height: 64px;
+}

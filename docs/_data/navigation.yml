@@ -1,0 +1,9 @@
+main:
+  - title: Home
+    url: /
+  - title: User Guide
+    url: /user-guide/
+  - title: Examples
+    url: /examples/
+  - title: Advanced Usage
+    url: /advanced-usage/

@@ -1,0 +1,192 @@
+// ==============================================
+// Navbar — Timer Ninja
+// ==============================================
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  z-index: $z-navbar;
+  background: rgba($light-bg, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border);
+  transition: background $transition-normal, border-color $transition-normal;
+}
+
+.navbar__inner {
+  max-width: $bp-xl;
+  margin: 0 auto;
+  padding: 0 $space-xl;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--color-text);
+  transition: color $transition-fast;
+
+  img {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+  }
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+  list-style: none;
+
+  @media (max-width: $bp-md) {
+    display: none;
+
+    &.is-open {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: var(--navbar-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--color-bg);
+      padding: $space-2xl;
+      gap: $space-xl;
+      z-index: $z-navbar;
+      animation: fadeIn 0.2s ease;
+    }
+  }
+}
+
+.navbar__link {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color $transition-fast;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 1px;
+    transform: scaleX(0);
+    transition: transform $transition-normal;
+  }
+
+  &:hover,
+  &.is-active {
+    color: var(--color-primary);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+}
+
+// Theme toggle
+.theme-toggle {
+  background: none;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: all $transition-normal;
+  font-size: 1.1rem;
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: rotate(20deg);
+  }
+
+  .icon-sun,
+  .icon-moon {
+    transition: opacity $transition-fast, transform $transition-normal;
+  }
+
+  .icon-moon { display: none; }
+}
+
+[data-theme="dark"] .theme-toggle {
+  .icon-sun { display: none; }
+  .icon-moon { display: block; }
+}
+
+// GitHub link
+.navbar__github {
+  color: var(--color-text-muted);
+  transition: color $transition-fast;
+
+  &:hover {
+    color: var(--color-primary);
+  }
+
+  svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+}
+
+// Hamburger
+.navbar__hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $space-sm;
+  color: var(--color-text);
+
+  @media (max-width: $bp-md) {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+    transition: all $transition-fast;
+  }
+
+  &.is-open {
+    span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  }
+}

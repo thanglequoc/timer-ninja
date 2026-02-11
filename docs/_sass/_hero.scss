@@ -1,0 +1,122 @@
+// ==============================================
+// Hero — Timer Ninja
+// ==============================================
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0fafa 0%, #e0f4f4 30%, #f5f9fa 60%, #e8f6f6 100%);
+  padding-top: var(--navbar-height);
+}
+
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  padding: $space-2xl;
+}
+
+.hero__mascot {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto $space-xl;
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 12px 24px rgba(70, 191, 198, 0.2));
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.hero__badge {
+  margin-bottom: $space-lg;
+}
+
+.hero__title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: $space-lg;
+  color: var(--color-text);
+
+  @media (max-width: $bp-md) {
+    font-size: 2.5rem;
+  }
+
+  @media (max-width: $bp-sm) {
+    font-size: 2rem;
+  }
+}
+
+.hero__subtitle {
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  max-width: 550px;
+  margin: 0 auto $space-2xl;
+  line-height: 1.7;
+
+  @media (max-width: $bp-sm) {
+    font-size: 1.05rem;
+  }
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-md;
+  margin-bottom: $space-2xl;
+  flex-wrap: wrap;
+}
+
+.hero__version {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-pill;
+  padding: 0.5rem 1rem;
+
+  .version-label {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+}
+
+.hero__scroll-hint {
+  position: absolute;
+  bottom: $space-2xl;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-text-muted);
+  animation: bounce 2s ease-in-out infinite;
+  opacity: 0.6;
+  font-size: 1.5rem;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}

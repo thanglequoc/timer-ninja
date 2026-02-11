@@ -57,7 +57,7 @@ To use Timer Ninja, you need to do two things: add the `timer-ninja` dependency 
 ### Add the Timer Ninja dependency
 **Gradle**  
 ```groovy
-implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.2.0'
+implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.3.0'
 ```
 
 **Maven**  
@@ -65,7 +65,7 @@ implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.
 <dependency>
     <groupId>io.github.thanglequoc</groupId>
     <artifactId>timer-ninja</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -85,11 +85,11 @@ plugins {
 dependencies {
     // ...
     // Timer ninja dependency
-    implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.2.0'
-    aspect 'io.github.thanglequoc:timer-ninja:1.2.0'
+    implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.3.0'
+    aspect 'io.github.thanglequoc:timer-ninja:1.3.0'
 
     // Enable this if you want to track method in Test classes
-	testAspect("io.github.thanglequoc:timer-ninja:1.2.0")
+	testAspect("io.github.thanglequoc:timer-ninja:1.3.0")
 }
 ```
 
@@ -111,7 +111,7 @@ Example project's `pom.xml`
     <dependency>
         <groupId>io.github.thanglequoc</groupId>
         <artifactId>timer-ninja</artifactId>
-        <version>1.2.0</version>
+        <version>1.3.0</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>

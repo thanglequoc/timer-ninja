@@ -110,38 +110,81 @@
   gap: $space-md;
 }
 
-// Theme toggle
+// Theme toggle slider
 .theme-toggle {
   background: none;
-  border: 2px solid var(--color-border);
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--color-text-muted);
-  transition: all $transition-normal;
-  font-size: 1.1rem;
-
-  &:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    transform: rotate(20deg);
-  }
-
-  .icon-sun,
-  .icon-moon {
-    transition: opacity $transition-fast, transform $transition-normal;
-  }
-
-  .icon-moon { display: none; }
 }
 
-[data-theme="dark"] .theme-toggle {
-  .icon-sun { display: none; }
-  .icon-moon { display: block; }
+.theme-toggle__track {
+  position: relative;
+  width: 56px;
+  height: 28px;
+  background: #d1e9eb;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  transition: background-color 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle__icon {
+  font-size: 0.85rem;
+  line-height: 1;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+  user-select: none;
+}
+
+.theme-toggle__icon--sun {
+  opacity: 1;
+}
+
+.theme-toggle__icon--moon {
+  opacity: 0.4;
+}
+
+.theme-toggle__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle:hover .theme-toggle__thumb {
+  box-shadow: 0 2px 8px rgba(70, 191, 198, 0.4);
+}
+
+[data-theme="dark"] {
+  .theme-toggle__track {
+    background: #2a3a4a;
+  }
+
+  .theme-toggle__icon--sun {
+    opacity: 0.4;
+  }
+
+  .theme-toggle__icon--moon {
+    opacity: 1;
+  }
+
+  .theme-toggle__thumb {
+    transform: translateX(28px);
+    background: #1a2636;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(109, 213, 219, 0.3);
+  }
 }
 
 // GitHub link

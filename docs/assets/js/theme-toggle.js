@@ -19,6 +19,9 @@
   function setTheme(theme) {
     html.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY, theme);
+    if (toggle) {
+      toggle.setAttribute('aria-checked', theme === 'dark' ? 'true' : 'false');
+    }
   }
 
   // Initialize

@@ -17,9 +17,12 @@
     </ul>
 
     <div class="navbar__actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-        <span class="icon-sun">&#9728;&#65039;</span>
-        <span class="icon-moon">&#127769;</span>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode" role="switch" aria-checked="false">
+        <span class="theme-toggle__track">
+          <span class="theme-toggle__icon theme-toggle__icon--sun">&#9728;&#65039;</span>
+          <span class="theme-toggle__icon theme-toggle__icon--moon">&#127769;</span>
+          <span class="theme-toggle__thumb"></span>
+        </span>
       </button>
 
       <a href="https://github.com/thanglequoc/timer-ninja" target="_blank" rel="noopener" class="navbar__github" aria-label="GitHub">

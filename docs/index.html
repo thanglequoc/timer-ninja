@@ -18,7 +18,7 @@ description: "Timer Ninja — A sneaky library for Java Method Timing. Track exe
       A <span class="text-gradient">Sneaky Library</span> for<br>Java Method Timing
     </h1>
     <p class="hero__subtitle animate-fade-up">
-      Track execution time with a single annotation. Preserve call hierarchies. Zero boilerplate. Built on AspectJ.
+      Track execution time with a single annotation. Get a full call hierarchy with timing &amp; arguments — no heavy tracing frameworks required.
     </p>
     <div class="hero__actions animate-fade-up">
       <a href="{{ '/user-guide/' | relative_url }}" class="btn btn--primary">
@@ -44,7 +44,7 @@ description: "Timer Ninja — A sneaky library for Java Method Timing. Track exe
     <div class="section__header animate-fade-up">
       <span class="badge">Why Timer Ninja?</span>
       <h2>Performance Tracking,<br><span class="text-gradient">Without the Pain</span></h2>
-      <p>Everything you need to understand your code's timing behavior — nothing you don't.</p>
+      <p>Full method timing with call hierarchy &amp; argument details — without the weight of a distributed tracing framework.</p>
     </div>
     <div class="features__grid stagger-children">
       <div class="feature-card animate-scale-up">
@@ -54,8 +54,8 @@ description: "Timer Ninja — A sneaky library for Java Method Timing. Track exe
       </div>
       <div class="feature-card animate-scale-up">
         <div class="feature-card__icon">&#127795;</div>
-        <h3 class="feature-card__title">Visual Call Tree</h3>
-        <p class="feature-card__desc">Nested method calls render as a clear, indented hierarchy. See the full execution flow at a glance.</p>
+        <h3 class="feature-card__title">Visual Call Tree + Args</h3>
+        <p class="feature-card__desc">See nested method calls as a clear, indented hierarchy — with full argument values. Instantly pinpoint <em>what</em> was called and <em>with which data</em>.</p>
       </div>
       <div class="feature-card animate-scale-up">
         <div class="feature-card__icon">&#129513;</div>
@@ -73,9 +73,9 @@ description: "Timer Ninja — A sneaky library for Java Method Timing. Track exe
         <p class="feature-card__desc">Just AspectJ + SLF4J. No framework lock-in. Works with Spring Boot, plain Java, or anything in between.</p>
       </div>
       <div class="feature-card animate-scale-up">
-        <div class="feature-card__icon">&#128737;&#65039;</div>
-        <h3 class="feature-card__title">Thread-Safe</h3>
-        <p class="feature-card__desc">Isolated per-thread context via ThreadLocal. Safe for concurrent and multi-threaded applications.</p>
+        <div class="feature-card__icon">&#9889;</div>
+        <h3 class="feature-card__title">No Heavy Frameworks</h3>
+        <p class="feature-card__desc">Skip the complexity of OpenTelemetry, Zipkin, or Micrometer. Timer Ninja gives you actionable timing insights with zero infrastructure overhead.</p>
       </div>
     </div>
   </div>
@@ -156,6 +156,61 @@ public String doSomethingInteresting() {
 <span class="trace-line">       |-- private void <span class="trace-highlight">notifyViaSMS</span>(User user) - <span class="trace-time">53 ms</span></span>
 <span class="trace-line">       |-- private void <span class="trace-highlight">notifyViaEmail</span>(User user) - <span class="trace-time">205 ms</span> <span class="trace-threshold">&curren; [Threshold Exceed !!: 200 ms]</span></span>
 <span class="trace-line"><span class="trace-bracket">{====== End of trace context id: 851ac23b... ======}</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WHY NOT HEAVY TRACING ==================== -->
+<section class="section comparison" id="vs-tracing">
+  <div class="container">
+    <div class="section__header animate-fade-up">
+      <span class="badge">Why Timer Ninja?</span>
+      <h2>Heavy Tracing Frameworks<br><span class="text-gradient">Are Overkill</span></h2>
+      <p>Most apps don't need distributed tracing infrastructure just to answer &ldquo;why is this method slow?&rdquo;</p>
+    </div>
+
+    <div class="comparison__panels">
+      <div class="code-panel code-panel--before animate-fade-left">
+        <div class="code-panel__header">
+          <span>&#128680;</span> Typical Tracing Framework
+        </div>
+        <div class="code-panel__body">
+          <ul class="vs-list">
+            <li>Install collector agent &amp; backend (Jaeger/Zipkin)</li>
+            <li>Add SDK + multiple dependencies</li>
+            <li>Configure exporters, samplers, propagators</li>
+            <li>Manually create spans with <code>Tracer</code> API</li>
+            <li>Deploy &amp; manage a separate tracing dashboard</li>
+            <li>Instrument each method individually</li>
+            <li>Arguments &amp; context? Write custom attributes by hand</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="code-panel code-panel--after animate-fade-right">
+        <div class="code-panel__header">
+          <span>&#129505;</span> Timer Ninja
+        </div>
+        <div class="code-panel__body">
+          <ul class="vs-list">
+            <li><strong>One dependency</strong> — add to Gradle or Maven</li>
+            <li><strong>One annotation</strong> — <code>@TimerNinjaTracker</code></li>
+            <li><strong>Auto call hierarchy</strong> — nested tree, zero config</li>
+            <li><strong>Arguments included</strong> — <code>includeArgs&nbsp;=&nbsp;true</code></li>
+            <li><strong>Threshold alerts</strong> — only see what's slow</li>
+            <li><strong>No infrastructure</strong> — output goes to your existing logs</li>
+            <li><strong>Works immediately</strong> — no dashboards to deploy</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison__result animate-fade-up">
+      <div class="line-count">
+        <span class="lines-before">Complex infrastructure setup</span>
+        <span class="lines-arrow">&rarr;</span>
+        <span class="lines-after">1 annotation, instant insights</span>
       </div>
     </div>
   </div>

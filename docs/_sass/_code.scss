@@ -70,6 +70,44 @@
   }
 }
 
+// VS comparison list (Timer Ninja vs Heavy Frameworks)
+.vs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    position: relative;
+    padding: 0.55rem 0 0.55rem 1.6rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &::before {
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+    }
+  }
+}
+
+.code-panel--before .vs-list li::before {
+  content: "✕";
+  color: $accent-red;
+  font-weight: 700;
+}
+
+.code-panel--after .vs-list li::before {
+  content: "✓";
+  color: $primary;
+  font-weight: 700;
+}
+
 .comparison__result {
   text-align: center;
   padding: $space-xl 0;

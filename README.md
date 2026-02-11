@@ -248,7 +248,62 @@ public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount)
 **Sample output:**
 > public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount) - Args: [sourceUserId={1}, targetUserId={2}, amount={3000}] - 1037 ms ¤ [Threshold Exceed !!: 200 ms]
 
-## Reading the time trace output
+**Sample output:**
+> public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount) - Args: [sourceUserId={1}, targetUserId={2}, amount={3000}] - 1037 ms ¤ [Threshold Exceed !!: 200 ms]
+
+## Block Tracking with TimerNinjaBlock ⚡ (New in 1.3.0)
+
+TimerNinjaBlock allows you to measure arbitrary code blocks within a method without extracting separate methods. This is perfect for tracking specific phases or operations inside a method.
+
+### Basic Usage
+
+```java
+public void processOrder(Order order) {
+    // Regular code not tracked
+    
+    TimerNinjaBlock.measure("database query", () -> {
+        database.query("SELECT * FROM orders WHERE id = " + order.getId());
+    });
+    
+    // More code not tracked
+}
+```
+
+### Block with Return Value
+
+```java
+public void processOrder(Order order) {
+    String result = TimerNinjaBlock.measure("fetch data", () -> {
+        return api.fetchOrderData(order.getId());
+    });
+    
+    System.out.println(result);
+}
+```
+
+### Block with Custom Configuration
+
+```java
+import java.time.temporal.ChronoUnit;
+
+public void processOrder(Order order) {
+    BlockTrackerConfig config = new BlockTrackerConfig()
+        .setTimeUnit(ChronoUnit.SECONDS)
+        .setThreshold(2);
+    
+    TimerNinjaBlock.measure("long operation", config, () -> {
+        performLongRunningTask(order);
+    });
+}
+```
+
+**Sample output:**
+> [Block] database query - 42 ms  
+> [Block] fetch data - 125 ms
+
+Use TimerNinjaBlock when you need granular tracking within a method without creating separate tracked methods.
+
+## Reading the time trace output## Reading the time trace output
 Once the method is executed, you should be able to find the result similar to this one in the output/log
 
 ```log

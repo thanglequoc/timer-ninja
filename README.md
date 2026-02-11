@@ -248,6 +248,32 @@ public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount)
 **Sample output:**
 > public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount) - Args: [sourceUserId={1}, targetUserId={2}, amount={3000}] - 1037 ms ¤ [Threshold Exceed !!: 200 ms]
 
+
+
+## Block Tracking with `TimerNinjaBlock`
+
+TimerNinjaBlock allows you to measure arbitrary code blocks within a method without extracting separate methods. This is perfect for tracking specific phases or operations inside a method.
+
+### Basic Usage
+
+```java
+public void processOrder(Order order) {
+    // Regular code not tracked
+    
+    TimerNinjaBlock.measure("database query", () -> {
+        database.query("SELECT * FROM orders WHERE id = " + order.getId());
+    });
+    
+    // More code not tracked
+}
+```
+
+Use TimerNinjaBlock for granular tracking within a method without creating separate tracked methods.
+
+For more advanced block tracking usage, see the [User Guide Wiki](https://github.com/thanglequoc/timer-ninja/wiki/User-Guide#block-tracking).
+
+
+
 ## Reading the time trace output
 Once the method is executed, you should be able to find the result similar to this one in the output/log
 
@@ -264,6 +290,10 @@ In detail:
 Any sequence execution of other annotated tracker methods inside the parent method will also be accounted for in the existing trace context.  
 `Trace timestamp`: The timestamp when the trace context is initiated, in UTC timezone.  
 `Begin-end of trace context`: The detailed execution time of each method. The `|--` sign indicate the call to this method originated from the above parent method, which help to visualize the execution stacktrace.
+
+
+## User Guide
+For comprehensive documentation, examples, and best practices on using the Timer-Ninja library efficiently, visit the [Wiki page](https://github.com/thanglequoc/timer-ninja/wiki/User-Guide).
 
 ## Troubleshooting
 If you need to troubleshoot, you can toggle the `DEBUG` log level on logger `io.github.thanglequoc.timerninja.TimerNinjaThreadContext`.

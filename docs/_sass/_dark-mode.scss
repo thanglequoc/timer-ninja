@@ -1,0 +1,72 @@
+// ==============================================
+// Dark Mode — Timer Ninja
+// ==============================================
+
+[data-theme="dark"] {
+  --color-bg: #{$dark-bg};
+  --color-surface: #{$dark-surface};
+  --color-surface-alt: #{$dark-surface-alt};
+  --color-text: #{$dark-text};
+  --color-text-muted: #{$dark-text-muted};
+  --color-border: #{$dark-border};
+  --color-code-bg: #{$dark-code-bg};
+  --color-code-border: #{$dark-code-border};
+  --color-card-bg: #{$dark-card-bg};
+  --color-card-shadow: #{$dark-card-shadow};
+
+  .navbar {
+    background: rgba($dark-bg, 0.92);
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #0d1520 0%, #14202e 50%, #0d1520 100%);
+  }
+
+  .hero__particles {
+    opacity: 0.5;
+  }
+
+  .code-panel {
+    background: $dark-code-bg;
+    border-color: $dark-border;
+  }
+
+  .code-panel--before .code-panel__header {
+    background: rgba($accent-red, 0.12);
+    color: lighten($accent-red, 15%);
+  }
+
+  .code-panel--after .code-panel__header {
+    background: rgba($primary, 0.12);
+    color: $primary-light;
+  }
+
+  .feature-card {
+    background: rgba($dark-surface, 0.7);
+    border-color: $dark-border;
+  }
+
+  .feature-card:hover {
+    border-color: rgba($primary, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba($primary, 0.15);
+  }
+
+  .trace-output {
+    background: $dark-code-bg;
+    border-color: $dark-border;
+  }
+
+  .step-card {
+    background: $dark-surface;
+    border-color: $dark-border;
+  }
+
+  // Syntax highlighting dark overrides
+  .highlight {
+    background: $dark-code-bg;
+  }
+
+  img {
+    opacity: 0.92;
+  }
+}

@@ -1,0 +1,301 @@
+// ==============================================
+// Code Panels & Comparison — Timer Ninja
+// ==============================================
+
+.comparison {
+  background: var(--color-bg);
+}
+
+.comparison__panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-xl;
+  margin-bottom: $space-2xl;
+
+  @media (max-width: $bp-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.code-panel {
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-code-border);
+  border-radius: $radius-lg;
+  overflow: hidden;
+  transition: all $transition-normal;
+
+  &:hover {
+    box-shadow: 0 8px 30px var(--color-card-shadow);
+  }
+}
+
+.code-panel__header {
+  padding: $space-md $space-lg;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  border-bottom: 1px solid var(--color-code-border);
+}
+
+.code-panel--before .code-panel__header {
+  background: rgba($accent-red, 0.06);
+  color: $accent-red;
+}
+
+.code-panel--after .code-panel__header {
+  background: rgba($primary, 0.06);
+  color: $primary;
+}
+
+.code-panel__body {
+  padding: $space-lg;
+  overflow-x: auto;
+
+  pre {
+    margin: 0;
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+
+  code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--color-text);
+  }
+}
+
+.comparison__result {
+  text-align: center;
+  padding: $space-xl 0;
+
+  .line-count {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-md;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .lines-before {
+    color: $accent-red;
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  .lines-arrow {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+  }
+
+  .lines-after {
+    color: var(--color-primary);
+  }
+}
+
+// Trace output section
+.trace-section {
+  background: var(--color-surface);
+}
+
+.trace-output {
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-code-border);
+  border-radius: $radius-lg;
+  overflow: hidden;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.trace-output__header {
+  padding: $space-md $space-lg;
+  background: var(--color-surface-alt);
+  border-bottom: 1px solid var(--color-code-border);
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    
+    &--red { background: #ff5f57; }
+    &--yellow { background: #ffbd2e; }
+    &--green { background: #28c840; }
+  }
+}
+
+.trace-output__body {
+  padding: $space-lg;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  overflow-x: auto;
+  white-space: pre;
+
+  .trace-line {
+    opacity: 0;
+
+    &.is-visible {
+      opacity: 1;
+    }
+  }
+
+  .trace-highlight {
+    color: var(--color-primary);
+  }
+
+  .trace-threshold {
+    color: $accent-orange;
+  }
+
+  .trace-args {
+    color: var(--color-text-muted);
+  }
+
+  .trace-time {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .trace-bracket {
+    color: var(--color-primary);
+    opacity: 0.6;
+  }
+}
+
+// Quickstart section
+.quickstart {
+  background: var(--color-bg);
+}
+
+.quickstart__steps {
+  max-width: 780px;
+  margin: 0 auto;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-border);
+
+    @media (max-width: $bp-sm) {
+      left: 22px;
+    }
+  }
+}
+
+.step-card {
+  display: flex;
+  gap: $space-xl;
+  padding: $space-xl;
+  margin-bottom: $space-lg;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-lg;
+  position: relative;
+  transition: all $transition-normal;
+
+  &:hover {
+    border-color: rgba($primary, 0.3);
+    box-shadow: 0 4px 20px var(--color-card-shadow);
+  }
+
+  @media (max-width: $bp-sm) {
+    flex-direction: column;
+    gap: $space-md;
+    padding: $space-lg;
+  }
+}
+
+.step-card__number {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: $bp-sm) {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+  }
+}
+
+.step-card__content {
+  flex: 1;
+  min-width: 0;
+
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: $space-sm;
+  }
+
+  p {
+    font-size: 0.9rem;
+    margin-bottom: $space-md;
+  }
+
+  pre {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+  }
+}
+
+// Tab switcher for Maven/Gradle
+.tab-switcher {
+  display: inline-flex;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $radius-pill;
+  padding: 3px;
+  margin-bottom: $space-md;
+}
+
+.tab-switcher__btn {
+  padding: 0.35rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  background: none;
+  border-radius: $radius-pill;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  transition: all $transition-fast;
+
+  &.is-active {
+    background: var(--color-primary);
+    color: #fff;
+  }
+}
+
+.tab-content {
+  display: none;
+
+  &.is-active {
+    display: block;
+  }
+}

@@ -1,0 +1,317 @@
+---
+layout: home
+title: Home
+description: "Timer Ninja — A sneaky library for Java Method Timing. Track execution time with a single annotation. Zero boilerplate."
+---
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="hero">
+  <canvas class="hero__particles" id="heroParticles"></canvas>
+  <div class="hero__content">
+    <div class="hero__mascot animate-fade-up">
+      <img src="{{ '/assets/images/mascot.png' | relative_url }}" alt="Timer Ninja mascot — a ninja sloth">
+    </div>
+    <div class="hero__badge animate-fade-up">
+      <span class="badge">Open Source &middot; Java Library</span>
+    </div>
+    <h1 class="hero__title animate-fade-up">
+      A <span class="text-gradient">Sneaky Library</span> for<br>Java Method Timing
+    </h1>
+    <p class="hero__subtitle animate-fade-up">
+      Track execution time with a single annotation. Preserve call hierarchies. Zero boilerplate. Built on AspectJ.
+    </p>
+    <div class="hero__actions animate-fade-up">
+      <a href="{{ '/user-guide/' | relative_url }}" class="btn btn--primary">
+        Get Started
+        <span>&rarr;</span>
+      </a>
+      <a href="https://github.com/thanglequoc/timer-ninja" target="_blank" rel="noopener" class="btn btn--outline">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+    <div class="hero__version animate-fade-up">
+      <span class="version-label">Latest</span>
+      <span>io.github.thanglequoc:timer-ninja:1.3.0</span>
+    </div>
+  </div>
+  <div class="hero__scroll-hint" aria-hidden="true">&#8595;</div>
+</section>
+
+<!-- ==================== WHY TIMER NINJA ==================== -->
+<section class="section features" id="features">
+  <div class="container">
+    <div class="section__header animate-fade-up">
+      <span class="badge">Why Timer Ninja?</span>
+      <h2>Performance Tracking,<br><span class="text-gradient">Without the Pain</span></h2>
+      <p>Everything you need to understand your code's timing behavior — nothing you don't.</p>
+    </div>
+    <div class="features__grid stagger-children">
+      <div class="feature-card animate-scale-up">
+        <div class="feature-card__icon">&#127919;</div>
+        <h3 class="feature-card__title">One Annotation</h3>
+        <p class="feature-card__desc">Replace 6 lines of timestamp boilerplate with <code>@TimerNinjaTracker</code>. That's it.</p>
+      </div>
+      <div class="feature-card animate-scale-up">
+        <div class="feature-card__icon">&#127795;</div>
+        <h3 class="feature-card__title">Visual Call Tree</h3>
+        <p class="feature-card__desc">Nested method calls render as a clear, indented hierarchy. See the full execution flow at a glance.</p>
+      </div>
+      <div class="feature-card animate-scale-up">
+        <div class="feature-card__icon">&#129513;</div>
+        <h3 class="feature-card__title">Block Tracking</h3>
+        <p class="feature-card__desc">Measure arbitrary code blocks with <code>TimerNinjaBlock.measure()</code> — no need to extract separate methods.</p>
+      </div>
+      <div class="feature-card animate-scale-up">
+        <div class="feature-card__icon">&#9888;&#65039;</div>
+        <h3 class="feature-card__title">Smart Thresholds</h3>
+        <p class="feature-card__desc">Only surface slow operations. Set a threshold and Timer Ninja filters the noise automatically.</p>
+      </div>
+      <div class="feature-card animate-scale-up">
+        <div class="feature-card__icon">&#129718;</div>
+        <h3 class="feature-card__title">Zero Dependencies</h3>
+        <p class="feature-card__desc">Just AspectJ + SLF4J. No framework lock-in. Works with Spring Boot, plain Java, or anything in between.</p>
+      </div>
+      <div class="feature-card animate-scale-up">
+        <div class="feature-card__icon">&#128737;&#65039;</div>
+        <h3 class="feature-card__title">Thread-Safe</h3>
+        <p class="feature-card__desc">Isolated per-thread context via ThreadLocal. Safe for concurrent and multi-threaded applications.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BEFORE & AFTER ==================== -->
+<section class="section comparison" id="comparison">
+  <div class="container">
+    <div class="section__header animate-fade-up">
+      <span class="badge">Before &amp; After</span>
+      <h2>Stop Timing Methods<br><span class="text-gradient">The Hard Way</span></h2>
+      <p>See how Timer Ninja eliminates manual timestamp boilerplate.</p>
+    </div>
+
+    <div class="comparison__panels">
+      <div class="code-panel code-panel--before animate-fade-left">
+        <div class="code-panel__header">
+          <span>&#10060;</span> Traditional Approach
+        </div>
+        <div class="code-panel__body">
+          <pre><code id="codeTraditional" class="language-java">long before = System.currentTimeMillis();
+doSomethingInteresting();
+long after = System.currentTimeMillis();
+System.out.println(
+  "Execution time (ms): " + (after - before)
+);</code></pre>
+        </div>
+      </div>
+
+      <div class="code-panel code-panel--after animate-fade-right">
+        <div class="code-panel__header">
+          <span>&#10004;&#65039;</span> Timer Ninja
+        </div>
+        <div class="code-panel__body">
+          <pre><code id="codeTimerNinja" class="language-java">@TimerNinjaTracker
+public String doSomethingInteresting() {
+    // Your business logic — that's it!
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="comparison__result animate-fade-up">
+      <div class="line-count">
+        <span class="lines-before">6 lines of boilerplate</span>
+        <span class="lines-arrow">&rarr;</span>
+        <span class="lines-after">1 annotation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SEE IT IN ACTION ==================== -->
+<section class="section trace-section" id="trace">
+  <div class="container">
+    <div class="section__header animate-fade-up">
+      <span class="badge">See It In Action</span>
+      <h2>Beautiful <span class="text-gradient">Trace Output</span></h2>
+      <p>Timer Ninja prints a visual call tree showing the full execution hierarchy, timing, and arguments.</p>
+    </div>
+
+    <div class="trace-output animate-scale-up" id="traceOutput">
+      <div class="trace-output__header">
+        <span class="dot dot--red"></span>
+        <span class="dot dot--yellow"></span>
+        <span class="dot dot--green"></span>
+        <span style="margin-left: 8px;">Timer Ninja Trace Output</span>
+      </div>
+      <div class="trace-output__body" id="traceBody">
+<span class="trace-line"><span class="trace-highlight">Timer Ninja trace context id:</span> 851ac23b-2669-4883-8c97-032b8fd2d45c</span>
+<span class="trace-line"><span class="trace-highlight">Trace timestamp:</span> 2023-04-03T07:16:48.491Z</span>
+<span class="trace-line"><span class="trace-bracket">{===== Start of trace context id: 851ac23b... =====}</span></span>
+<span class="trace-line">public void <span class="trace-highlight">requestMoneyTransfer</span>(...) <span class="trace-args">- Args: [sourceUserId={1}, targetUserId={2}, amount={500}]</span> - <span class="trace-time">1747 ms</span></span>
+<span class="trace-line">   |-- public User <span class="trace-highlight">findUser</span>(int userId) - <span class="trace-time">105000 &micro;s</span></span>
+<span class="trace-line">   |-- public void <span class="trace-highlight">processPayment</span>(User user, int amount) - <span class="trace-time">770 ms</span></span>
+<span class="trace-line">     |-- public boolean <span class="trace-highlight">changeAmount</span>(User user, int amount) - <span class="trace-time">306 ms</span></span>
+<span class="trace-line">     |-- public void <span class="trace-highlight">notify</span>(User user) - <span class="trace-time">258 ms</span></span>
+<span class="trace-line">       |-- private void <span class="trace-highlight">notifyViaSMS</span>(User user) - <span class="trace-time">53 ms</span></span>
+<span class="trace-line">       |-- private void <span class="trace-highlight">notifyViaEmail</span>(User user) - <span class="trace-time">205 ms</span> <span class="trace-threshold">&curren; [Threshold Exceed !!: 200 ms]</span></span>
+<span class="trace-line"><span class="trace-bracket">{====== End of trace context id: 851ac23b... ======}</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== QUICK START ==================== -->
+<section class="section quickstart" id="quickstart">
+  <div class="container">
+    <div class="section__header animate-fade-up">
+      <span class="badge">Quick Start</span>
+      <h2>Get Started in <span class="text-gradient">60 Seconds</span></h2>
+      <p>Four simple steps to start tracking method execution time.</p>
+    </div>
+
+    <div class="quickstart__steps">
+      <!-- Step 1 -->
+      <div class="step-card animate-fade-up">
+        <div class="step-card__number">1</div>
+        <div class="step-card__content">
+          <h3>Add the Dependency</h3>
+          <p>Add Timer Ninja from Maven Central to your project.</p>
+          <div class="tab-switcher">
+            <button class="tab-switcher__btn is-active" data-tab="gradle-dep">Gradle</button>
+            <button class="tab-switcher__btn" data-tab="maven-dep">Maven</button>
+          </div>
+          <div class="tab-content is-active" id="gradle-dep">
+            <pre><code class="language-groovy">implementation 'io.github.thanglequoc:timer-ninja:1.3.0'
+aspect 'io.github.thanglequoc:timer-ninja:1.3.0'</code></pre>
+          </div>
+          <div class="tab-content" id="maven-dep">
+            <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.github.thanglequoc&lt;/groupId&gt;
+    &lt;artifactId&gt;timer-ninja&lt;/artifactId&gt;
+    &lt;version&gt;1.3.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-card animate-fade-up">
+        <div class="step-card__number">2</div>
+        <div class="step-card__content">
+          <h3>Add AspectJ Plugin</h3>
+          <p>Enable AspectJ compilation so annotations get woven.</p>
+          <div class="tab-switcher">
+            <button class="tab-switcher__btn is-active" data-tab="gradle-plugin">Gradle</button>
+            <button class="tab-switcher__btn" data-tab="maven-plugin">Maven</button>
+          </div>
+          <div class="tab-content is-active" id="gradle-plugin">
+            <pre><code class="language-groovy">plugins {
+    id "io.freefair.aspectj.post-compile-weaving" version '9.1.0'
+}</code></pre>
+          </div>
+          <div class="tab-content" id="maven-plugin">
+            <pre><code class="language-xml">&lt;plugin&gt;
+    &lt;groupId&gt;dev.aspectj&lt;/groupId&gt;
+    &lt;artifactId&gt;aspectj-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.14.1&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;aspectLibraries&gt;
+            &lt;aspectLibrary&gt;
+                &lt;groupId&gt;io.github.thanglequoc&lt;/groupId&gt;
+                &lt;artifactId&gt;timer-ninja&lt;/artifactId&gt;
+            &lt;/aspectLibrary&gt;
+        &lt;/aspectLibraries&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-card animate-fade-up">
+        <div class="step-card__number">3</div>
+        <div class="step-card__content">
+          <h3>Annotate Your Methods</h3>
+          <p>Place <code>@TimerNinjaTracker</code> on any method or constructor.</p>
+          <pre><code class="language-java">@TimerNinjaTracker
+public void processPayment(User user, int amount) {
+    // Your business logic
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-card animate-fade-up">
+        <div class="step-card__number">4</div>
+        <div class="step-card__content">
+          <h3>Run &amp; See the Trace &#128007;</h3>
+          <p>Execute your code — Timer Ninja automatically logs the execution trace.</p>
+          <pre><code>public void processPayment(User user, int amount) - 770 ms
+   |-- public boolean changeAmount(User user, int amount) - 306 ms
+   |-- public void notify(User user) - 258 ms</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BLOCK TRACKING HIGHLIGHT ==================== -->
+<section class="section features" id="block-tracking">
+  <div class="container">
+    <div class="section__header animate-fade-up">
+      <span class="badge">Advanced Feature</span>
+      <h2>Block Tracking with<br><span class="text-gradient">TimerNinjaBlock</span></h2>
+      <p>Measure any code block — no need to extract separate methods.</p>
+    </div>
+
+    <div class="comparison__panels">
+      <div class="code-panel code-panel--after animate-fade-left" style="grid-column: 1 / -1; max-width: 720px; margin: 0 auto;">
+        <div class="code-panel__header">
+          <span>&#129513;</span> Block Tracking Example
+        </div>
+        <div class="code-panel__body">
+          <pre><code class="language-java">@TimerNinjaTracker(includeArgs = true, threshold = 100)
+public void processLoanApplication(int userId, double amount, int months) {
+    User user = userService.findUser(userId);
+
+    TimerNinjaBlock.measure("credit score check", () -&gt; {
+        simulateDelay(60);
+    });
+
+    TimerNinjaBlock.measure("income verification", () -&gt; {
+        simulateDelay(80);
+    });
+
+    String status = TimerNinjaBlock.measure("final approval", () -&gt; {
+        simulateDelay(50);
+        return "APPROVED";
+    });
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="section" id="cta" style="text-align: center;">
+  <div class="container">
+    <div class="hero__mascot animate-fade-up" style="width: 100px; height: 100px;">
+      <img src="{{ '/assets/images/mascot.png' | relative_url }}" alt="Timer Ninja mascot">
+    </div>
+    <h2 class="animate-fade-up">Ready to <span class="text-gradient">Track Like a Ninja</span>?</h2>
+    <p class="animate-fade-up" style="max-width: 500px; margin: 0 auto 2rem; font-size: 1.1rem;">
+      Start measuring method execution time the smart way. Zero boilerplate, full visibility.
+    </p>
+    <div class="hero__actions animate-fade-up">
+      <a href="{{ '/user-guide/' | relative_url }}" class="btn btn--primary">
+        Read the Docs
+        <span>&rarr;</span>
+      </a>
+      <a href="{{ '/examples/' | relative_url }}" class="btn btn--outline">
+        See Examples
+      </a>
+    </div>
+  </div>
+</section>

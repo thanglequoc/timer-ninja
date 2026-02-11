@@ -1,0 +1,14 @@
+---
+# Main SCSS entry — imports all partials
+---
+@import "variables";
+@import "base";
+@import "navbar";
+@import "hero";
+@import "features";
+@import "code";
+@import "docs";
+@import "animations";
+@import "footer";
+@import "prism-overrides";
+@import "dark-mode";

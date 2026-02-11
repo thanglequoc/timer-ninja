@@ -1,0 +1,24 @@
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__mascot">
+      <img src="{{ '/assets/images/mascot.png' | relative_url }}" alt="Timer Ninja mascot" loading="lazy">
+    </div>
+    <p class="footer__tagline">Made with stealth by <strong>Timer Ninja</strong> — A sneaky library for Java Method Timing</p>
+    <ul class="footer__links">
+      <li><a href="{{ '/' | relative_url }}">Home</a></li>
+      <li><a href="{{ '/user-guide/' | relative_url }}">User Guide</a></li>
+      <li><a href="{{ '/examples/' | relative_url }}">Examples</a></li>
+      <li><a href="{{ '/advanced-usage/' | relative_url }}">Advanced Usage</a></li>
+      <li><a href="https://github.com/thanglequoc/timer-ninja" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://central.sonatype.com/artifact/io.github.thanglequoc/timer-ninja" target="_blank" rel="noopener">Maven Central</a></li>
+    </ul>
+    <p class="footer__copy">&copy; {{ 'now' | date: "%Y" }} Timer Ninja. Released under the Apache License 2.0.</p>
+  </div>
+</footer>
+
+<!-- Back to top button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>

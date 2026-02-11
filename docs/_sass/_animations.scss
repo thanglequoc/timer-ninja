@@ -1,0 +1,218 @@
+// ==============================================
+// Animations — Timer Ninja
+// ==============================================
+
+// Keyframes
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ninja-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-10deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+// Scroll-triggered animation classes
+// Elements start hidden and animate in when .is-animated is added
+.animate-fade-in {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+
+  &.is-animated {
+    opacity: 1;
+  }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.is-animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.is-animated {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.is-animated {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-scale-up {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+
+  &.is-animated {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Stagger delays for grid children
+.stagger-children {
+  .animate-fade-up,
+  .animate-scale-up {
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i}) {
+        transition-delay: #{($i - 1) * 0.1}s;
+      }
+    }
+  }
+}
+
+// Parallax helper
+.parallax {
+  will-change: transform;
+}
+
+// Cursor blink for typing effect
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--color-primary);
+  animation: blink 0.8s step-end infinite;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+}
+
+// Page load entrance
+body {
+  opacity: 0;
+  animation: pageEntrance 0.4s ease forwards;
+  animation-delay: 0.05s;
+}
+
+@keyframes pageEntrance {
+  to { opacity: 1; }
+}
+
+// Respect prefers-reduced-motion
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    opacity: 1;
+    animation: none;
+  }
+
+  .animate-fade-in,
+  .animate-fade-up,
+  .animate-fade-left,
+  .animate-fade-right,
+  .animate-scale-up {
+    opacity: 1;
+    transform: none;
+  }
+}

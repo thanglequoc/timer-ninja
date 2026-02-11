@@ -1,0 +1,113 @@
+// ==============================================
+// Footer — Timer Ninja
+// ==============================================
+
+.footer {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: $space-3xl 0 $space-xl;
+}
+
+.footer__inner {
+  max-width: $bp-xl;
+  margin: 0 auto;
+  padding: 0 $space-xl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footer__mascot {
+  width: 64px;
+  height: 64px;
+  margin-bottom: $space-lg;
+  opacity: 0.8;
+  transition: opacity $transition-normal;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.footer__tagline {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: $space-lg;
+}
+
+.footer__links {
+  display: flex;
+  align-items: center;
+  gap: $space-xl;
+  margin-bottom: $space-xl;
+  list-style: none;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  a {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.footer__copy {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+// Back to top button
+.back-to-top {
+  position: fixed;
+  bottom: $space-xl;
+  right: $space-xl;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease,
+              background-color $transition-fast, color $transition-fast, box-shadow $transition-fast;
+  z-index: 90;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  &:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(70, 191, 198, 0.35);
+  }
+
+  @media (max-width: $bp-sm) {
+    bottom: $space-lg;
+    right: $space-lg;
+    width: 40px;
+    height: 40px;
+  }
+}

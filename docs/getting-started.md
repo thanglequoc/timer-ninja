@@ -1,7 +1,7 @@
 ---
 layout: docs
 title: Getting Started
-description: "Get up and running with Timer Ninja — installation, annotation tracking, block tracking, and trace output."
+description: "How to measure Java method execution time with Timer Ninja. Install the library, annotate methods, track code blocks, and visualize performance traces."
 prev_page:
   title: Home
   url: /

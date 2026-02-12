@@ -1,7 +1,7 @@
 ---
 layout: docs
 title: Advanced Usage
-description: "Real-world examples, advanced features, optimization techniques, and best practices for Timer Ninja."
+description: "Advanced Java method timing patterns — nested call tracking, dynamic thresholds, Spring Boot integration, and performance optimization with Timer Ninja."
 prev_page:
   title: Getting Started
   url: /getting-started/

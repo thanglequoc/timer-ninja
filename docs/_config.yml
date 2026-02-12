@@ -1,7 +1,17 @@
 title: Timer Ninja
-description: "A sneaky library for Java Method Timing — Track execution time with a single annotation. Zero boilerplate."
+tagline: "Measure Java Method Execution Time with a Single Annotation"
+description: "Timer Ninja is a lightweight Java library to measure method execution time, track code performance, and visualize call hierarchies — with just one annotation. No heavy frameworks required."
 url: "https://thanglequoc.github.io"
 baseurl: "/timer-ninja"
+lang: en
+
+# Social / Open Graph
+twitter:
+  card: summary_large_image
+social:
+  name: Timer Ninja
+  links:
+    - https://github.com/thanglequoc/timer-ninja
 
 # Build settings
 markdown: kramdown
@@ -16,6 +26,7 @@ sass:
 # Plugins
 plugins:
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Defaults
 defaults:
@@ -24,6 +35,7 @@ defaults:
       type: "pages"
     values:
       layout: "default"
+      image: /assets/images/mascot.png
 
 # Exclude from build
 exclude:

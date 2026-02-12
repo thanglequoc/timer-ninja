@@ -2,6 +2,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#46bfc6">
 
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-14R8KVB7N0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-14R8KVB7N0');
+</script>
+
 <title>{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
 
 <!-- Fonts -->
@@ -21,6 +30,36 @@
 <link rel="icon" href="{{ '/assets/images/mascot.png' | relative_url }}" type="image/png">
 
 {% seo %}
+
+<!-- Additional SEO meta tags -->
+<meta name="keywords" content="measure Java method execution time, track Java code execution time, Java method timing, Java performance tracking, Java annotation timing, Java profiling library, AspectJ timing, TimerNinjaTracker">
+<link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url | replace: 'index.html', '' }}">
+
+<!-- JSON-LD Structured Data -->
+{% if page.url == "/" or page.url == "/index.html" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  "name": "Timer Ninja",
+  "description": "A lightweight Java library to measure method execution time, track code performance, and visualize call hierarchies with a single annotation.",
+  "url": "{{ site.url }}{{ site.baseurl }}/",
+  "codeRepository": "https://github.com/thanglequoc/timer-ninja",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "Java"
+  },
+  "runtimePlatform": "Java",
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "author": {
+    "@type": "Person",
+    "name": "ThangLeQuoc",
+    "url": "https://github.com/thanglequoc"
+  },
+  "keywords": ["Java", "method timing", "execution time", "performance tracking", "AspectJ", "annotation", "profiling"]
+}
+</script>
+{% endif %}
 
 <!-- Theme init (prevent FOUC) -->
 <script>

@@ -45,11 +45,13 @@
   // Hamburger menu
   var hamburger = document.getElementById('navHamburger');
   var navLinks = document.getElementById('navLinks');
+  var navbarEl = document.getElementById('navbar');
 
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', function () {
-      hamburger.classList.toggle('is-open');
+      var isOpen = hamburger.classList.toggle('is-open');
       navLinks.classList.toggle('is-open');
+      if (navbarEl) navbarEl.classList.toggle('menu-open', isOpen);
     });
 
     // Close on link click (mobile)
@@ -57,6 +59,7 @@
       link.addEventListener('click', function () {
         hamburger.classList.remove('is-open');
         navLinks.classList.remove('is-open');
+        if (navbarEl) navbarEl.classList.remove('menu-open');
       });
     });
   }

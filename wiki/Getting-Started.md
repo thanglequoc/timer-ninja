@@ -75,6 +75,22 @@ dependencies {
 </plugin>
 ```
 
+### Set Up Logging Output
+
+Timer Ninja uses **SLF4J** for logging. Depending on your project, choose one of the following:
+
+**Spring Boot projects** — no extra setup needed. Spring Boot ships with Logback, so Timer Ninja output will appear in your logs automatically.
+
+**Non-Spring projects with an SLF4J provider** — if you already have Logback, Log4j2, or another SLF4J-compatible logging framework, you're good to go. Just make sure the log level for `io.github.thanglequoc.timerninja.TimerNinjaUtil` is at least `INFO`.
+
+**No logging framework?** — enable System.out output at application startup:
+
+```java
+TimerNinjaConfiguration.getInstance().toggleSystemOutLog(true);
+```
+
+This prints trace output directly to the console — useful for quick testing or simple console applications.
+
 ---
 
 ## Annotation-based Tracking

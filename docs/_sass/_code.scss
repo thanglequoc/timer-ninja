@@ -40,13 +40,13 @@
 }
 
 .code-panel--before .code-panel__header {
-  background: rgba($accent-red, 0.06);
+  background: rgba($accent-red, 0.08);
   color: $accent-red;
 }
 
 .code-panel--after .code-panel__header {
-  background: rgba($primary, 0.06);
-  color: $primary;
+  background: rgba($primary, 0.10);
+  color: $primary-dark;
 }
 
 .code-panel__body {

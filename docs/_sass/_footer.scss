@@ -62,6 +62,38 @@
   }
 }
 
+.footer__author {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: $space-md;
+  display: flex;
+  align-items: center;
+  gap: $space-xs;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    color: var(--color-text);
+    font-weight: 600;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.footer__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid var(--color-border);
+}
+
 .footer__copy {
   font-size: 0.8rem;
   color: var(--color-text-muted);

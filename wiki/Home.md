@@ -169,9 +169,8 @@ public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount)
 
 ## Documentation
 
-- **[User Guide](User-Guide)** - Detailed feature documentation and configuration options
-- **[Examples](Examples)** - Real-world usage examples and patterns
-- **[Advanced Usage](Advanced-Usage)** - Advanced features and optimization techniques
+- **[Getting Started](Getting-Started)** — Installation, feature documentation, and configuration options
+- **[Advanced Usage](Advanced-Usage)** — Real-world examples, advanced features, and optimization techniques
 
 ## Example Projects
 

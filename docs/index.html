@@ -1,7 +1,7 @@
 ---
 layout: home
 title: Home
-description: "Timer Ninja — A sneaky library for Java Method Timing. Track execution time with a single annotation. Zero boilerplate."
+description: "Timer Ninja — Measure Java method execution time with a single annotation. Track code performance, visualize call hierarchies, and identify slow methods without heavy tracing frameworks."
 ---
 
 <!-- ==================== HERO ==================== -->
@@ -15,13 +15,13 @@ description: "Timer Ninja — A sneaky library for Java Method Timing. Track exe
       <span class="badge">Open Source &middot; Java Library</span>
     </div>
     <h1 class="hero__title animate-fade-up">
-      A <span class="text-gradient">Sneaky Library</span> for<br>Java Method Timing
+      Measure <span class="text-gradient">Java Method Execution Time</span><br>with a Single Annotation
     </h1>
     <p class="hero__subtitle animate-fade-up">
-      Track execution time with a single annotation. Get a full call hierarchy with timing &amp; arguments — no heavy tracing frameworks required.
+      Track code execution time in Java effortlessly. Get a full call hierarchy with timing &amp; arguments — no heavy tracing frameworks required.
     </p>
     <div class="hero__actions animate-fade-up">
-      <a href="{{ '/user-guide/' | relative_url }}" class="btn btn--primary">
+      <a href="{{ '/getting-started/' | relative_url }}" class="btn btn--primary">
         Get Started
         <span>&rarr;</span>
       </a>
@@ -319,16 +319,35 @@ public void processPayment(User user, int amount) {
     </div>
     <h2 class="animate-fade-up">Ready to <span class="text-gradient">Track Like a Ninja</span>?</h2>
     <p class="animate-fade-up" style="max-width: 560px; margin: 0 auto 2rem; font-size: 1.1rem;">
-      Block tracking, custom thresholds, constructor tracking, and more — explore all features in the docs and start measuring the smart way.
+      Block tracking, custom thresholds, constructor tracking, and more — explore all features in the docs and start measuring Java method execution time the smart way.
     </p>
     <div class="hero__actions animate-fade-up">
-      <a href="{{ '/user-guide/' | relative_url }}" class="btn btn--primary">
-        Read the User Guide
+      <a href="{{ '/getting-started/' | relative_url }}" class="btn btn--primary">
+        Get Started
         <span>&rarr;</span>
       </a>
-      <a href="{{ '/examples/' | relative_url }}" class="btn btn--outline">
-        Browse Examples
+      <a href="{{ '/advanced-usage/' | relative_url }}" class="btn btn--outline">
+        Advanced Usage
       </a>
     </div>
   </div>
 </section>
+
+<!-- SEO: crawlable text content for search engines -->
+<noscript>
+  <section style="padding: 2rem;">
+    <h2>Timer Ninja — Measure Java Method Execution Time</h2>
+    <p>Timer Ninja is a lightweight, open-source Java library that lets you measure method execution time with a single <code>@TimerNinjaTracker</code> annotation. Built on AspectJ, it automatically tracks code execution time in Java, preserves the full call hierarchy, and displays it as a visual trace tree — with no manual timestamp boilerplate.</p>
+    <h3>Key Features</h3>
+    <ul>
+      <li>Measure Java method execution time with one annotation</li>
+      <li>Track nested method calls as an indented call tree</li>
+      <li>Include method arguments in timing output</li>
+      <li>Set thresholds to surface only slow operations</li>
+      <li>Block tracking for arbitrary code sections</li>
+      <li>Zero external dependencies beyond AspectJ and SLF4J</li>
+      <li>Works with Spring Boot, plain Java, and any JVM project</li>
+    </ul>
+    <p>Stop writing <code>System.currentTimeMillis()</code> boilerplate. Start tracking Java code execution time with Timer Ninja.</p>
+  </section>
+</noscript>

@@ -65,19 +65,17 @@
     &.is-open {
       display: flex;
       flex-direction: column;
-      position: fixed;
+      position: absolute;
       top: var(--navbar-height);
       left: 0;
       right: 0;
-      bottom: 0;
       background: var(--color-bg);
-      backdrop-filter: none;
-      padding: $space-2xl;
-      gap: $space-xl;
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      padding: $space-lg $space-2xl;
+      gap: $space-md;
       z-index: $z-navbar;
-      animation: fadeIn 0.2s ease;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      animation: slideDown 0.2s ease;
     }
   }
 }

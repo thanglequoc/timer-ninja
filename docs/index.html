@@ -311,40 +311,22 @@ public void processPayment(User user, int amount) {
   </div>
 </section>
 
-<!-- ==================== BLOCK TRACKING HIGHLIGHT ==================== -->
-<section class="section features" id="block-tracking">
+<!-- ==================== EXPLORE MORE ==================== -->
+<section class="section" id="explore-more" style="text-align: center;">
   <div class="container">
     <div class="section__header animate-fade-up">
-      <span class="badge">Advanced Feature</span>
-      <h2>Block Tracking with<br><span class="text-gradient">TimerNinjaBlock</span></h2>
-      <p>Measure any code block — no need to extract separate methods.</p>
+      <span class="badge">There's More</span>
+      <h2>Explore All <span class="text-gradient">Features</span></h2>
+      <p>Block tracking, custom thresholds, constructor tracking, global configuration, and more — Timer Ninja has everything you need for method-level performance insights.</p>
     </div>
-
-    <div class="comparison__panels">
-      <div class="code-panel code-panel--after animate-fade-left" style="grid-column: 1 / -1; max-width: 720px; margin: 0 auto;">
-        <div class="code-panel__header">
-          <span>&#129513;</span> Block Tracking Example
-        </div>
-        <div class="code-panel__body">
-          <pre><code class="language-java">@TimerNinjaTracker(includeArgs = true, threshold = 100)
-public void processLoanApplication(int userId, double amount, int months) {
-    User user = userService.findUser(userId);
-
-    TimerNinjaBlock.measure("credit score check", () -&gt; {
-        simulateDelay(60);
-    });
-
-    TimerNinjaBlock.measure("income verification", () -&gt; {
-        simulateDelay(80);
-    });
-
-    String status = TimerNinjaBlock.measure("final approval", () -&gt; {
-        simulateDelay(50);
-        return "APPROVED";
-    });
-}</code></pre>
-        </div>
-      </div>
+    <div class="hero__actions animate-fade-up">
+      <a href="{{ '/user-guide/' | relative_url }}" class="btn btn--primary">
+        Read the Full User Guide
+        <span>&rarr;</span>
+      </a>
+      <a href="{{ '/examples/' | relative_url }}" class="btn btn--outline">
+        Browse Examples
+      </a>
     </div>
   </div>
 </section>

@@ -26,6 +26,23 @@
     opacity: 0.5;
   }
 
+  // Improve sidebar TOC readability
+  .docs__sidebar-title {
+    color: #a8bcc9;
+  }
+
+  .docs__toc a {
+    color: #b0c4d1;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+
+    &.is-active {
+      color: var(--color-primary);
+    }
+  }
+
   .code-panel {
     background: $dark-code-bg;
     border-color: $dark-border;

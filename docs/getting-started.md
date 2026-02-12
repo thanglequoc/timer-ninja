@@ -1,18 +1,91 @@
 ---
 layout: docs
-title: User Guide
-description: "Comprehensive guide on how to use Timer Ninja's features effectively."
+title: Getting Started
+description: "Get up and running with Timer Ninja — installation, annotation tracking, block tracking, and trace output."
 prev_page:
   title: Home
   url: /
 next_page:
-  title: Examples
-  url: /examples/
+  title: Advanced Usage
+  url: /advanced-usage/
 ---
 
-# User Guide
+# Getting Started
 
-This guide provides detailed documentation on how to use Timer Ninja's features effectively.
+This guide covers everything you need to install Timer Ninja and start tracking method execution time.
+
+---
+
+## Installation
+
+### Add the Timer Ninja Dependency
+
+**Gradle:**
+```groovy
+implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.3.0'
+```
+
+**Maven:**
+```xml
+<dependency>
+    <groupId>io.github.thanglequoc</groupId>
+    <artifactId>timer-ninja</artifactId>
+    <version>1.3.0</version>
+    <scope>compile</scope>
+</dependency>
+```
+
+### Declare AspectJ Plugin
+
+**Gradle** — using [FreeFair AspectJ Gradle plugin](https://github.com/freefair/gradle-plugins):
+
+```groovy
+plugins {
+    id "io.freefair.aspectj.post-compile-weaving" version '9.1.0'
+}
+
+dependencies {
+    implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.3.0'
+    aspect 'io.github.thanglequoc:timer-ninja:1.3.0'
+
+    // Enable this if you want to track methods in test classes
+    testAspect("io.github.thanglequoc:timer-ninja:1.3.0")
+}
+```
+
+**Maven** — using [Forked Mojo's AspectJ Plugin](https://github.com/dev-aspectj/aspectj-maven-plugin):
+
+```xml
+<plugin>
+    <groupId>dev.aspectj</groupId>
+    <artifactId>aspectj-maven-plugin</artifactId>
+    <version>1.14.1</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.9.25</version>
+        </dependency>
+    </dependencies>
+    <configuration>
+        <complianceLevel>${java.version}</complianceLevel>
+        <aspectLibraries>
+            <aspectLibrary>
+                <groupId>io.github.thanglequoc</groupId>
+                <artifactId>timer-ninja</artifactId>
+            </aspectLibrary>
+        </aspectLibraries>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>compile</goal>
+                <goal>test-compile</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
 
 ---
 
@@ -22,7 +95,7 @@ The `@TimerNinjaTracker` annotation is the primary way to track method execution
 
 ### Basic Usage
 
-Annotate any method or constructor to start tracking:
+Annotate any method to start tracking:
 
 ```java
 @TimerNinjaTracker
@@ -53,8 +126,6 @@ public NotificationService() - 80 ms
 
 ### Annotation Attributes
 
-The `@TimerNinjaTracker` annotation supports several configuration options:
-
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `enabled` | `boolean` | `true` | Enable or disable tracking for this method |
@@ -66,53 +137,35 @@ The `@TimerNinjaTracker` annotation supports several configuration options:
 
 ## Configuration Options
 
-### 1. Enable/Disable Tracking
+### Enable/Disable Tracking
 
-Control whether a specific method is tracked:
+Temporarily disable tracking for a method without removing the annotation:
 
 ```java
-@TimerNinjaTracker(enabled = true)
-public void trackThis() {
-    // This will be tracked
-}
-
 @TimerNinjaTracker(enabled = false)
 public void dontTrackThis() {
     // This will NOT be tracked
 }
 ```
 
-**Use Case:** Temporarily disable tracking for a method without removing the annotation.
+### Time Unit Selection
 
-### 2. Time Unit Selection
-
-Choose the appropriate time unit for your measurement needs:
+Choose the appropriate time unit for your measurement:
 
 ```java
 import java.time.temporal.ChronoUnit;
 
 @TimerNinjaTracker(timeUnit = ChronoUnit.SECONDS)
-public void longRunningOperation() {
-    // For operations taking seconds
-}
+public void longRunningOperation() { }
 
-@TimerNinjaTracker(timeUnit = ChronoUnit.MILLIS)
-public void standardOperation() {
-    // For operations taking milliseconds (default)
-}
+@TimerNinjaTracker(timeUnit = ChronoUnit.MILLIS)   // default
+public void standardOperation() { }
 
 @TimerNinjaTracker(timeUnit = ChronoUnit.MICROS)
-public void preciseOperation() {
-    // For operations requiring microsecond precision
-}
+public void preciseOperation() { }
 ```
 
-**Supported Units:**
-- `ChronoUnit.SECONDS` — Seconds
-- `ChronoUnit.MILLIS` — Milliseconds (default)
-- `ChronoUnit.MICROS` — Microseconds
-
-### 3. Include Method Arguments
+### Include Method Arguments
 
 Log method arguments for better debugging context:
 
@@ -130,7 +183,7 @@ public void processUser(int userId, String name, String email) - Args: [userId={
 
 > **Important:** Ensure your objects have proper `toString()` implementations for meaningful output.
 
-### 4. Threshold Filtering
+### Threshold Filtering
 
 Filter out fast methods to focus on performance issues:
 
@@ -141,14 +194,15 @@ public void potentiallySlowMethod() {
 }
 ```
 
-**When Threshold is Exceeded:**
+**When threshold is exceeded:**
 ```
 public void potentiallySlowMethod() - 723 ms ¤ [Threshold Exceed !!: 500 ms]
 ```
 
-**When Below Threshold:** The method is suppressed from the trace output. If all methods in a trace are below threshold, a summary is shown.
+**When below threshold:** The method is suppressed from the trace output. If all methods in a trace are below threshold, a summary is shown instead.
 
-**Combining with Arguments:**
+### Combining Options
+
 ```java
 @TimerNinjaTracker(includeArgs = true, threshold = 200)
 public void requestMoneyTransfer(int sourceUserId, int targetUserId, int amount) {
@@ -239,7 +293,7 @@ public void parentMethod() - 100 ms
 
 ### Elements Explained
 
-1. **Trace Context ID** — Auto-generated UUID for a trace. All tracked methods in the same call stack share this ID.
+1. **Trace Context ID** — Auto-generated UUID. All tracked methods in the same call stack share this ID.
 2. **Trace Timestamp** — When the trace context was initiated (UTC timezone).
 3. **Start/End Markers** — Delimit the trace boundaries.
 4. **Method Lines** — Each tracked method shows: signature, arguments (if enabled), execution time, threshold indicator.
@@ -253,79 +307,6 @@ When all methods in a trace are below their thresholds:
 Timer Ninja trace context id: abc123...
 Trace timestamp: 2023-04-03T14:27:50.322Z
 All 3 tracked items within threshold. min: 5 ms, max: 45 ms, total: 50 ms
-```
-
----
-
-## Installation
-
-### Add the Timer Ninja Dependency
-
-**Gradle:**
-```groovy
-implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.3.0'
-```
-
-**Maven:**
-```xml
-<dependency>
-    <groupId>io.github.thanglequoc</groupId>
-    <artifactId>timer-ninja</artifactId>
-    <version>1.3.0</version>
-    <scope>compile</scope>
-</dependency>
-```
-
-### Declare AspectJ Plugin
-
-**Gradle** — using [FreeFair AspectJ Gradle plugin](https://github.com/freefair/gradle-plugins):
-
-```groovy
-plugins {
-    id "io.freefair.aspectj.post-compile-weaving" version '9.1.0'
-}
-
-dependencies {
-    implementation group: 'io.github.thanglequoc', name: 'timer-ninja', version: '1.3.0'
-    aspect 'io.github.thanglequoc:timer-ninja:1.3.0'
-
-    // Enable this if you want to track methods in test classes
-    testAspect("io.github.thanglequoc:timer-ninja:1.3.0")
-}
-```
-
-**Maven** — using [Forked Mojo's AspectJ Plugin](https://github.com/dev-aspectj/aspectj-maven-plugin):
-
-```xml
-<plugin>
-    <groupId>dev.aspectj</groupId>
-    <artifactId>aspectj-maven-plugin</artifactId>
-    <version>1.14.1</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjtools</artifactId>
-            <version>1.9.25</version>
-        </dependency>
-    </dependencies>
-    <configuration>
-        <complianceLevel>${java.version}</complianceLevel>
-        <aspectLibraries>
-            <aspectLibrary>
-                <groupId>io.github.thanglequoc</groupId>
-                <artifactId>timer-ninja</artifactId>
-            </aspectLibrary>
-        </aspectLibraries>
-    </configuration>
-    <executions>
-        <execution>
-            <goals>
-                <goal>compile</goal>
-                <goal>test-compile</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
 ```
 
 ---
@@ -351,70 +332,3 @@ To enable debug information:
 ```xml
 <logger name="io.github.thanglequoc.timerninja.TimerNinjaThreadContext" level="DEBUG"/>
 ```
-
----
-
-## Best Practices
-
-### Choose Appropriate Time Units
-
-- **Seconds** — For long-running operations (API calls, file I/O, batch processing)
-- **Milliseconds** — For general application logic (default)
-- **Microseconds** — For performance-critical code (algorithms, calculations)
-
-### Use Thresholds Strategically
-
-```java
-// Too low - creates noise
-@TimerNinjaTracker(threshold = 10)
-
-// Too high - miss issues
-@TimerNinjaTracker(threshold = 5000)
-
-// Balanced - catches real issues
-@TimerNinjaTracker(threshold = 200)
-```
-
-### Track Entry Points
-
-Add tracking to high-level entry points (REST controllers, main methods) to capture full execution traces:
-
-```java
-@RestController
-public class UserController {
-    @TimerNinjaTracker
-    @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userService.findById(id);
-    }
-}
-```
-
-### Don't Track Everything
-
-**Focus on:**
-- Critical business logic
-- External API calls
-- Database operations
-- File I/O operations
-
-**Avoid tracking:**
-- Simple getters/setters
-- Very fast operations (< 1ms)
-- Trivial utility methods
-
----
-
-## Troubleshooting
-
-### No Output in Logs
-
-1. Check if SLF4J provider is configured
-2. Verify log level is at least `INFO`
-3. Enable `System.out` for testing: `TimerNinjaConfiguration.getInstance().toggleSystemOutLog(true);`
-
-### Methods Not Being Tracked
-
-1. Verify AspectJ plugin is configured correctly
-2. Check that the dependency includes the aspect: `aspect 'io.github.thanglequoc:timer-ninja:1.3.0'`
-3. Ensure `enabled = true` (or not set) on the annotation
